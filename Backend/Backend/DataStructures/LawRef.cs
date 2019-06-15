@@ -1,8 +1,8 @@
 namespace DataStructures {
 public struct LawRef {
-	public string Shorthand;
-	public string Paragraph;
-	public string? Subparagraph;
+	public string shorthand;
+	public string paragraph;
+	public string? subparagraph;
 		
 }
 }

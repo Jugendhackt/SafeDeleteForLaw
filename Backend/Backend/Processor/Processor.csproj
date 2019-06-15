@@ -9,5 +9,9 @@
 	  <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
 	  <ProjectReference Include="..\Downloader\Downloader.csproj" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+	</ItemGroup>
 
 </Project>

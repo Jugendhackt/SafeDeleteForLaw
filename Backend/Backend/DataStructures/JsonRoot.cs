@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace DataStructures {
 public class JsonRoot {
-	public List<Statue> Statues;
-	public DateTime CreatedAt;
+	public List<Statue> statues;
+	public DateTime createdat;
 
 	public JsonRoot() {
-		CreatedAt=DateTime.Now;
-		Statues= new List<Statue>();
+		createdat=DateTime.Now;
+		statues= new List<Statue>();
 	}
 }
 }
