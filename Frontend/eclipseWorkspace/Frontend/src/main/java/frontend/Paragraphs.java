@@ -8,12 +8,15 @@ public class Paragraphs {
 	public String getNumber() {
 		return Number;
 	}
+	
 	public void setNumber(String Number) {
 		this.Number = Number;
 	}
+	
 	public boolean isHasSubparagraphs() {
 		return HasSubparagraphs;
 	}
+	
 	public void setHasSubparagraphs(boolean HasSubparagraphs) {
 		this.HasSubparagraphs = HasSubparagraphs;
 	}
