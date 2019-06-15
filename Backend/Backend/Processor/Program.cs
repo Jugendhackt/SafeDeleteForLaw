@@ -13,9 +13,6 @@ public static class Program {
 	/// All text to process
 	/// </summary>
 	public static List<(LawRef, string)> toProcess = new List<(LawRef, string)>();
-	/// <summary>
-	/// The root of the json to create
-	/// </summary>
 	public static JsonRoot root;
 	private static int refcnt;
 
