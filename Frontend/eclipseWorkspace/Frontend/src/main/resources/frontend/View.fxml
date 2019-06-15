@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controller">
+   <bottom>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <TextField fx:id="searchTextField" promptText="Suchwort .." />
+          <Button fx:id="searchButton" mnemonicParsing="false" text="Suchen" />
+            <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="195.0" />
+            <Button fx:id="checkButton" disable="true" mnemonicParsing="false" text="Checken" />
+            <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" text="Löschen" />
+        </items>
+      </ToolBar>
+   </bottom>
+   <center>
+   </center>
+</BorderPane>

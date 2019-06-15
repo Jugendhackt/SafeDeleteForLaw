@@ -115,7 +115,12 @@ public class Controller {
 	        assert checkButton != null : "fx:id=\"checkButton\" was not injected: check your FXML file 'View.fxml'.";
 	        assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'View.fxml'.";
 	        
-	        System.out.println(readJSON());
+//	        try {
+//				System.out.println(readJSON());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 	        
 	        setItems();
 	    }
@@ -128,8 +133,8 @@ public class Controller {
 		     lawListView.setItems(items);
 	    }
 	    
-	    private String readJSON() {
-	    	BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+	    private String readJSON() throws IOException {
+	    	BufferedReader br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/test.json"));
 	    	try {
 	    	    StringBuilder sb = new StringBuilder();
 	    	    String line = br.readLine();
@@ -139,6 +144,7 @@ public class Controller {
 	    	        sb.append(System.lineSeparator());
 	    	        line = br.readLine();
 	    	    }
+	    	    System.out.println(line);
 	    	    return sb.toString();
 	    	} finally {
 	    	    br.close();
