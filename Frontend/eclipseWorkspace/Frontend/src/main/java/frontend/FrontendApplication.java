@@ -14,11 +14,11 @@ public class FrontendApplication extends Application {
 		Scene scene = new Scene(parent);
 		
 		stage.setScene(scene);
-		stage.setTitle("SaveDeleteForLaw");
+		stage.setTitle("SafeDeleteForLaw");
 		stage.show();
 	}
 	
 	public static void main(String[] args) {
-		launch();
+		launch(); 
 	}
 }
