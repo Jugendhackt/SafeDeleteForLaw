@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace Processor {
 public static class Program {
+	/// <summary>
+	/// All text to process
+	/// </summary>
 	public static List<(LawRef, string)> toProcess = new List<(LawRef, string)>();
 	public static JsonRoot root;
 	private static int refcnt;
