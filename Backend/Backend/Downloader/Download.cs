@@ -23,7 +23,7 @@ public class Download {
 
 	public static HttpClient Client = new HttpClient();
 
-	private static readonly string LawPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+	public static readonly string LawPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
 		"SafeDeleteForLaw");
 
 	/// <summary>
