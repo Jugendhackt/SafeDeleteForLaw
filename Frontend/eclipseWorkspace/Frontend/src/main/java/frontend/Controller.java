@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -41,24 +42,30 @@ public class Controller {
 	    @FXML
 	    void lawListViewAction(MouseEvent event) {
 	    	if(lawListView.getSelectionModel().getSelectedItem() != null) {
-	    		
+	    		checkButton.setDisable(false);
 	    	}
 	    }
 
 	    @FXML
 	    void searchButtonAction(MouseEvent event) {
+	    	int lawSize = lawListView.getItems().size();
+	    	MultipleSelectionModel<String> model = lawListView.getSelectionModel();
+	    	
 	    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
-	    		if(lawListView.getSelectionModel().getSelectedItem() != null) {
-	    			for(int i = lawListView.getSelectionModel().getSelectedIndex()+1; i < lawListView.getItems().size(); i++) {
+	    		if(model.getSelectedItem() != null && model.getSelectedIndex() != lawSize-1) {
+	    			
+	    			for(int i = model.getSelectedIndex()+1; i < lawListView.getItems().size(); i++) {
 		    			if(lawListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
-		    				lawListView.getSelectionModel().select(i);
+		    				
+		    				model.select(i);
 		    				break;
 		    			}
-		    		}
+		    		}	
     			} else {
-    				for(int i = 0; i < lawListView.getItems().size(); i++) {
+    				for(int i = 0; i < lawSize; i++) {
     	    			if(lawListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
-    	    				lawListView.getSelectionModel().select(i);
+    	    				
+    	    				model.select(i);
     	    				break;
     	    			}
     	    		}
