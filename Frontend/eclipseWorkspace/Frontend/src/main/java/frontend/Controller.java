@@ -122,33 +122,28 @@ public class Controller {
 	    }
 	    
 	    private void setItems() {
-	    	 ObservableList<String> items = FXCollections.observableArrayList();
 	    	 
-	    	 ObjectMapper mapper = new ObjectMapper();
 
 	    	 try {
-				Root r = mapper.readValue(new File("/Users/Mitja/Desktop/test.json"), Root.class);
-				
+	    		 ObservableList<String> items = FXCollections.observableArrayList();
+		    	 
+		    	 ObjectMapper mapper = new ObjectMapper();
+		    	 Root r = mapper.readValue(new File("/Users/Mitja/Desktop/test.json"), Root.class);
+		    	 
+		    	 String item;
+		    	 
+		    	 for(int i = 0; i < r.getStatues().length; i++) {
+		    		 item = "";
+		    		 item += r.getStatues()[i].getFullname() + " (" + r.getStatues()[i].getShorthand() + ")";
+		    		 for(int j = 0; j < r.getStatues()[i].getParagraphs().length; j++) {
+		    			 item += " Paragraph: " + r.getStatues()[i].getParagraphs()[j].getNumber();
+		    		 }
+		    		 items.add(item);
+		    	 }
+		    	 
+		    	 lawListView.setItems(items);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	    	 
-		     lawListView.setItems(items);
-	    }
-	    
-	    private String readJSON() throws IOException {
-	    	BufferedReader br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/test.json"));
-	    	try {
-	    	    String newString = "";
-	    	    String line = br.readLine();
-
-	    	    while (line != null) {
-	    	        newString += line + "\n";
-	    	        line = br.readLine();
-	    	    }
-	    	    return newString;
-	    	} finally {
-	    	    br.close();
-	    	}
 	    }
 }
