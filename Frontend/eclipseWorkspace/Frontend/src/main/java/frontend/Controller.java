@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -115,20 +117,17 @@ public class Controller {
 	        assert checkButton != null : "fx:id=\"checkButton\" was not injected: check your FXML file 'View.fxml'.";
 	        assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'View.fxml'.";
 	        
-//	        try {
-//				System.out.println(readJSON());
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-	        
-	        setItems();
+	        try {
+				setItems(readJSON());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	    }
 	    
-	    private void setItems() {
+	    private void setItems(String json) {
 	    	 ObservableList<String> items = FXCollections.observableArrayList();
 	    	 
-	    	 
+	    	 ObjectMapper mapper = new ObjectMapper();
 	    	 
 		     lawListView.setItems(items);
 	    }
@@ -136,16 +135,14 @@ public class Controller {
 	    private String readJSON() throws IOException {
 	    	BufferedReader br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/test.json"));
 	    	try {
-	    	    StringBuilder sb = new StringBuilder();
+	    	    String newString = "";
 	    	    String line = br.readLine();
 
 	    	    while (line != null) {
-	    	        sb.append(line);
-	    	        sb.append(System.lineSeparator());
+	    	        newString += line + "\n";
 	    	        line = br.readLine();
 	    	    }
-	    	    System.out.println(line);
-	    	    return sb.toString();
+	    	    return newString;
 	    	} finally {
 	    	    br.close();
 	    	}

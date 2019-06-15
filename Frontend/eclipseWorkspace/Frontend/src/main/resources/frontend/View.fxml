@@ -21,5 +21,6 @@
       </ToolBar>
    </bottom>
    <center>
+      <ListView fx:id="lawListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
