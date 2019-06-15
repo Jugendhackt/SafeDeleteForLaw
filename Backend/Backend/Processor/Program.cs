@@ -35,17 +35,23 @@ public static class Program {
 				string following = searchTuple.Item2.Substring(match.Index + match.Length);
 				if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
 					following = following.Substring(following.IndexOf(' ') + 1);
-					string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}, 0));
+					string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
 					AddReference(searchTuple.Item1,
 						new LawRef {
 							shorthand = searchTuple.Item1.shorthand,
 							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value, subparagraph = abs
 						});
-					AddReference(searchTuple.Item1,
-						new LawRef {
-							shorthand = searchTuple.Item1.shorthand,
-							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value
-						});
+					if (following[following.IndexOfAny(new char[] {' ', '.'})] == ' ') {
+						following = following.Substring(following.IndexOf(' ') + 1);
+						if (following.StartsWith("und")) {
+							string abs2 = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
+							AddReference(searchTuple.Item1,
+								new LawRef {
+									shorthand = searchTuple.Item1.shorthand,
+									paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value, subparagraph = abs2
+								});
+						}
+					}
 				}
 				else {
 					AddReference(searchTuple.Item1,

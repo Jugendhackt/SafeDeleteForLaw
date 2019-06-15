@@ -50,6 +50,10 @@ public class MetadataProcessor {
 				number = number.Substring(2);
 			}
 
+			if (number.StartsWith("Art. ")) {
+				number = number.Substring(5);
+			}
+
 			var p = new Paragraph {number = number};
 			toUse.paragraphs.Add(p);
 			XElement textData = norm.Element("textdaten");
