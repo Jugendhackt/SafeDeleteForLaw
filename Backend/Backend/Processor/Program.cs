@@ -64,7 +64,7 @@ class Program {
 			}
 
 			string enbez = norm.Element("metadaten").Element("enbez").Value;
-			if (enbez.Contains("(XXXX)") || enbez.Contains("Inhalt") ||enbez=="bersicht") {
+			if (enbez.Contains("(XXXX)") || enbez.Contains("Inhalt") ||enbez=="Übersicht") {
 				continue;
 			}
 
