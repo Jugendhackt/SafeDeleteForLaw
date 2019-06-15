@@ -23,43 +23,59 @@ public static class Program {
 
 		ReferenceDetector();
 
-		Console.WriteLine(
-			$"Found {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))} subpars and {toProcess.Count} textblocks and {refcnt} references");
 		File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
+		Console.WriteLine(
+			$"Found {root.statues.Sum(x => x.paragraphs.Count)} paragraphs {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))} subpars and {toProcess.Count} textblocks and {refcnt} references, the json is {new FileInfo("root.json").Length} byte big");
 	}
 
 	private static void ReferenceDetector() {
-		Regex artikeln = new Regex("Artikel (\\d+) ");
+		Regex alphanum= new Regex("(\\d+\\w?)");
+		Regex artikeln = new Regex("Artikel (\\d+\\w?)(\\ |\\,|\\.)");
 		foreach ((LawRef, string) searchTuple in toProcess) {
 			foreach (Match match in artikeln.Matches(searchTuple.Item2)) {
 				string following = searchTuple.Item2.Substring(match.Index + match.Length);
-				if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
-					following = following.Substring(following.IndexOf(' ') + 1);
-					string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
+				string paragraph = match.Groups[1].Value;
+				
+				HandleArtikelnMatch(following, searchTuple, paragraph);
+			}
+		}
+
+		void HandleArtikelnMatch(string following, (LawRef, string) searchTuple, string paragraph) {
+			if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
+				following = following.Substring(following.IndexOf(' ') + 1);
+				Match absMatch = alphanum.Match(following);
+				if (!absMatch.Success||absMatch.Index!=0) {
 					AddReference(searchTuple.Item1,
 						new LawRef {
 							shorthand = searchTuple.Item1.shorthand,
-							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value, subparagraph = abs
+							paragraph = paragraph
 						});
-					if (following[following.IndexOfAny(new char[] {' ', '.'})] == ' ') {
-						following = following.Substring(following.IndexOf(' ') + 1);
-						if (following.StartsWith("und")) {
-							string abs2 = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
-							AddReference(searchTuple.Item1,
-								new LawRef {
-									shorthand = searchTuple.Item1.shorthand,
-									paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value, subparagraph = abs2
-								});
-						}
+					return;
+				}
+				string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
+				AddReference(searchTuple.Item1,
+					new LawRef {
+						shorthand = searchTuple.Item1.shorthand,
+						paragraph = paragraph, subparagraph = abs
+					});
+				if (following[following.IndexOfAny(new char[] {' ', '.'})] == ' ') {
+					following = following.Substring(following.IndexOf(' ') + 1);
+					if (following.StartsWith("und")) {
+						string abs2 = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
+						AddReference(searchTuple.Item1,
+							new LawRef {
+								shorthand = searchTuple.Item1.shorthand,
+								paragraph = paragraph, subparagraph = abs2
+							});
 					}
 				}
-				else {
-					AddReference(searchTuple.Item1,
-						new LawRef {
-							shorthand = searchTuple.Item1.shorthand,
-							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value
-						});
-				}
+			}
+			else {
+				AddReference(searchTuple.Item1,
+					new LawRef {
+						shorthand = searchTuple.Item1.shorthand,
+						paragraph = paragraph
+					});
 			}
 		}
 	}

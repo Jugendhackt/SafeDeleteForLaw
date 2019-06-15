@@ -41,7 +41,7 @@ public class MetadataProcessor {
 			}
 
 			string enbez = norm.Element("metadaten").Element("enbez").Value;
-			if (enbez.Contains("(XXXX)") || enbez.Contains("Inhalt") || enbez == "Übersicht") {
+			if (enbez.Contains("(XXXX)") ||enbez.Contains("(weggefallen)",StringComparison.OrdinalIgnoreCase) || enbez.Contains("Inhalt") || enbez == "Übersicht") {
 				continue;
 			}
 
@@ -49,7 +49,9 @@ public class MetadataProcessor {
 			if (number.StartsWith("§ ")) {
 				number = number.Substring(2);
 			}
-
+			if (number.StartsWith("Art ")) {
+				number = number.Substring(4);
+			}
 			if (number.StartsWith("Art. ")) {
 				number = number.Substring(5);
 			}
