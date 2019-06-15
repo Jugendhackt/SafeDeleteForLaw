@@ -20,24 +20,42 @@ public static class Program {
 			XDocument currentFile = XDocument.Load(file);
 			MetadataProcessor.LoadMetaData(currentFile);
 		}
-Regex artikeln= new Regex("Artikel (\\d+) ");
-		foreach ((LawRef, string) searchTuple in toProcess) {
-			foreach (Match match in artikeln.Matches(searchTuple.Item2)) {
-				string following = searchTuple.Item2.Substring(match.Index+match.Length);
-				if (following.StartsWith("Absatz")|| following.StartsWith("Abs.")) {
-					string abs = following.Substring(following.IndexOf(' ') + 1);
-					
-				}
-				else {
-					AddReference(searchTuple.Item1,
-						new LawRef {shorthand = searchTuple.Item1.shorthand, paragraph = (match.Groups.First(x=>x.GetType()==typeof(Group))).Value});
-				}
-			}
-		}
+
+		ReferenceDetector();
 
 		Console.WriteLine(
 			$"Found {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))} subpars and {toProcess.Count} textblocks and {refcnt} references");
 		File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
+	}
+
+	private static void ReferenceDetector() {
+		Regex artikeln = new Regex("Artikel (\\d+) ");
+		foreach ((LawRef, string) searchTuple in toProcess) {
+			foreach (Match match in artikeln.Matches(searchTuple.Item2)) {
+				string following = searchTuple.Item2.Substring(match.Index + match.Length);
+				if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
+					following = following.Substring(following.IndexOf(' ') + 1);
+					string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}, 0));
+					AddReference(searchTuple.Item1,
+						new LawRef {
+							shorthand = searchTuple.Item1.shorthand,
+							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value, subparagraph = abs
+						});
+					AddReference(searchTuple.Item1,
+						new LawRef {
+							shorthand = searchTuple.Item1.shorthand,
+							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value
+						});
+				}
+				else {
+					AddReference(searchTuple.Item1,
+						new LawRef {
+							shorthand = searchTuple.Item1.shorthand,
+							paragraph = (match.Groups.First(x => x.GetType() == typeof(Group))).Value
+						});
+				}
+			}
+		}
 	}
 
 	static bool AddReference(LawRef references, LawRef referenced) {
@@ -60,13 +78,12 @@ Regex artikeln= new Regex("Artikel (\\d+) ");
 			if (sb is null) {
 				return false;
 			}
+
 			sb.requiredby.Add(references);
-			
 		}
 
 		refcnt++;
 		return true;
-		
 	}
 }
 }
