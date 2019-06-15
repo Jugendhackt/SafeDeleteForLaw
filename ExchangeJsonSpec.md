@@ -1,0 +1,15 @@
+- [] Statues
+  - Shorthand :string
+  - Fullname : string
+  - BuildDate : DateTime
+  - [] Paragraphs
+    - Number : string
+    - BuildDate : DateTime
+    - HasSubparagraphs : bool
+    - [] Subparagraphs
+      - Number : string
+      - [] RequiredBy
+        - Shorthand :string
+        - Paragraph : string
+        - Subparagraph : string?
+- CreatedAt : Datetime
