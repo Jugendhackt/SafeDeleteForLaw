@@ -29,53 +29,63 @@ public static class Program {
 	}
 
 	private static void ReferenceDetector() {
-		Regex alphanum= new Regex("(\\d+\\w?)");
+		Regex alphanum = new Regex("(\\d+\\w?)");
+		Regex alphanumend = new Regex("(\\d+\\w?)(\\ |\\,|\\.)");
 		Regex artikeln = new Regex("Artikel (\\d+\\w?)(\\ |\\,|\\.)");
 		foreach ((LawRef, string) searchTuple in toProcess) {
 			foreach (Match match in artikeln.Matches(searchTuple.Item2)) {
 				string following = searchTuple.Item2.Substring(match.Index + match.Length);
 				string paragraph = match.Groups[1].Value;
-				
-				HandleArtikelnMatch(following, searchTuple, paragraph);
+
+				HandleArtikelnMatch(following, searchTuple.Item1, paragraph, match.Groups[2].Value == ",");
 			}
 		}
 
-		void HandleArtikelnMatch(string following, (LawRef, string) searchTuple, string paragraph) {
+		void HandleArtikelnMatch(string following, LawRef lawDefinedIn, string paragraph, bool cont) {
 			if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
 				following = following.Substring(following.IndexOf(' ') + 1);
 				Match absMatch = alphanum.Match(following);
-				if (!absMatch.Success||absMatch.Index!=0) {
-					AddReference(searchTuple.Item1,
+				if (!absMatch.Success || absMatch.Index != 0) {
+					AddReference(lawDefinedIn,
 						new LawRef {
-							shorthand = searchTuple.Item1.shorthand,
+							shorthand = lawDefinedIn.shorthand,
 							paragraph = paragraph
 						});
 					return;
 				}
-				string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
-				AddReference(searchTuple.Item1,
+
+				string abs = following.Substring(0, following.IndexOfAny(new char[] {' ', '.',','}));
+				AddReference(lawDefinedIn,
 					new LawRef {
-						shorthand = searchTuple.Item1.shorthand,
+						shorthand = lawDefinedIn.shorthand,
 						paragraph = paragraph, subparagraph = abs
 					});
 				if (following[following.IndexOfAny(new char[] {' ', '.'})] == ' ') {
 					following = following.Substring(following.IndexOf(' ') + 1);
 					if (following.StartsWith("und")) {
-						string abs2 = following.Substring(0, following.IndexOfAny(new char[] {' ', '.'}));
-						AddReference(searchTuple.Item1,
-							new LawRef {
-								shorthand = searchTuple.Item1.shorthand,
-								paragraph = paragraph, subparagraph = abs2
-							});
+						Match abs2Match = alphanumend.Match(following, 4, 5);
+						if (abs2Match.Success||abs2Match.Index==4) {
+							AddReference(lawDefinedIn,
+								new LawRef {
+									shorthand = lawDefinedIn.shorthand,
+									paragraph = paragraph, subparagraph = abs2Match.Groups[1].Value
+								});
+						}
 					}
 				}
 			}
 			else {
-				AddReference(searchTuple.Item1,
+				AddReference(lawDefinedIn,
 					new LawRef {
-						shorthand = searchTuple.Item1.shorthand,
+						shorthand = lawDefinedIn.shorthand,
 						paragraph = paragraph
 					});
+				if (cont) {
+					following = following.Substring(1);
+					Match nextArtMatch = alphanumend.Match(following);
+					HandleArtikelnMatch(following.Substring(nextArtMatch.Index + nextArtMatch.Length), lawDefinedIn,
+						nextArtMatch.Groups[1].Value, nextArtMatch.Groups[2].Value == ",");
+				}
 			}
 		}
 	}
