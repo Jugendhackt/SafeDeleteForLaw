@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace DataStructures {
 public class Subparagraph {
-	public string Number;
-	public List<LawRef> RequiredBy;
+	public string number;
+	public List<LawRef> requiredby;
 
 	public Subparagraph() {
-		RequiredBy= new List<LawRef>();
+		requiredby= new List<LawRef>();
 	}
 }
 }

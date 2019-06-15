@@ -2,12 +2,12 @@
 
 namespace DataStructures {
 public class Paragraph {
-	public string Number;
-	public bool HasSubparagraphs;
-	public List<Subparagraph> Subparagraphs;
+	public string number;
+	public bool hasSubparagraphs;
+	public List<Subparagraph> subparagraphs;
 
 	public Paragraph() {
-		Subparagraphs= new List<Subparagraph>();
+		subparagraphs= new List<Subparagraph>();
 	}
 	}
 }
