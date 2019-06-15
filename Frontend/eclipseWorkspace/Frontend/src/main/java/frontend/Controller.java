@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.collections.FXCollections;
@@ -117,17 +118,20 @@ public class Controller {
 	        assert checkButton != null : "fx:id=\"checkButton\" was not injected: check your FXML file 'View.fxml'.";
 	        assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'View.fxml'.";
 	        
-	        try {
-				setItems(readJSON());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	        setItems();
 	    }
 	    
-	    private void setItems(String json) {
+	    private void setItems() {
 	    	 ObservableList<String> items = FXCollections.observableArrayList();
 	    	 
 	    	 ObjectMapper mapper = new ObjectMapper();
+
+	    	 try {
+				Root r = mapper.readValue(new File("/Users/Mitja/Desktop/test.json"), Root.class);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	    	 
 		     lawListView.setItems(items);
 	    }
