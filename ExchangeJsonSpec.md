@@ -1,0 +1,13 @@
+- [] Statues
+  - Shorthand :string
+  - Fullname : string
+  - [] Paragraphs
+    - Number : string
+    - HasSubparagraphs : bool
+    - [] Subparagraphs
+      - Number : string
+      - [] RequiredBy
+        - Shorthand :string
+        - Paragraph : string
+        - Subparagraph : string?
+- CreatedAt : Datetime
