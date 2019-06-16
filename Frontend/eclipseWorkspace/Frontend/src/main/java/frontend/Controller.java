@@ -53,13 +53,13 @@ public class Controller {
 	    private StackPane statuesStackPane;
 
     	@FXML
-    	private ListView<String> statuesListView;
+    	private ListView<Statues> statuesListView;
 
     	@FXML
-    	private ListView<String> paragraphsListView;
+    	private ListView<Paragraphs> paragraphsListView;
     
     	@FXML
-    	private ListView<String> referListView; // Vorübergehend
+    	private ListView<Subparagraphs> referListView; // Vorübergehend
 
     	private int listViewStatus = 0;
     	private Root r;
@@ -109,10 +109,9 @@ public class Controller {
 	    				paragraphsListView.toFront();
 	        			paragraphsListView.setDisable(false);
 	    				
-	    				ObservableList<String> paragraphItems = FXCollections.observableArrayList();
-	    				
-	    				paragraphItems = getParagraphs();
-	    				
+	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
+                        paragraphItems.addRange(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
+
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
 	    				
@@ -266,20 +265,14 @@ public class Controller {
 	    
 	    private void setItems() {
 	    	 try {
-	    		 ObservableList<String> statuesItems = FXCollections.observableArrayList();
+	    		 ObservableList<Statues> statuesItems = FXCollections.observableArrayList();
 		    	 
 		    	 ObjectMapper mapper = new ObjectMapper();
 		    	 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		    	 r = mapper.readValue(new File("/Users/Mitja/Desktop/root.json"), Root.class);
-		    	 
-		    	 String item;
-		    	 
-		    	 for(int i = 0; i < r.getStatues().length; i++) {
-		    		 item = "";
-		    		 item += r.getStatues()[i].getFullname() + " (" + r.getStatues()[i].getShorthand() + ")";
-		    		 statuesItems.add(item);
-		    	 }
+                 statuesItems.addRange(r.getStatues());
+
 		    	 statuesListView.setItems(statuesItems);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -289,7 +282,7 @@ public class Controller {
 	    private ObservableList<String> getParagraphs() {
 	    	ObservableList<String> paragraphItems = FXCollections.observableArrayList();
 	    	String item = "";
-			
+
 			for(int i = 0; i < r.getStatues().length; i++) {
 				if(statuesListView.getSelectionModel().getSelectedItem().contains(r.getStatues()[i].getFullname())) {
 					titleLabel.setText(r.getStatues()[i].getShorthand() + " - Paragraphen");	

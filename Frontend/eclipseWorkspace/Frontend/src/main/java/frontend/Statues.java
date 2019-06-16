@@ -25,4 +25,5 @@ public class Statues {
 	public void setParagraphs(Paragraphs[] Paragraphs) {
 		this.Paragraphs = Paragraphs;
 	}
+	public String toString() {return getFullname() + " (" + getShorthand() + ")";}
 }
