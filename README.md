@@ -1,5 +1,5 @@
 # SafeDeleteForLaw
-This projects target is it to provide a way to check if one law is referenced somewhere else before it get's deleted.
+This projects aim is it to provide a way to check if one law is referenced somewhere else before it get's deleted.
 It uses german law info from the government site ([gesetze-im-internet.de](gesetze-im-internet.de)).
 
 It is divided in:
