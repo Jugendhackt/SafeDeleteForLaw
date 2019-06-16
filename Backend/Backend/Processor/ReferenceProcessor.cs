@@ -40,18 +40,13 @@ public class ReferenceProcessor {
 				return;
 			}
 
-			if (following.IndexOfAny(new char[] {' ', '.'}) != -1 && following[following.IndexOfAny(new char[] {' ', '.'})] == ' ') {
-				following = following.Substring(following.IndexOf(' ') + 1);
-				if (following.StartsWith("und")) {
-					Match abs2Match = AlphaNumEnd.Match(following, 4);
-					if (abs2Match.Success || abs2Match.Index == 4) {
-						AddReference(lawDefinedIn,
-							new LawRef {
-								shorthand = lawDefinedIn.shorthand,
-								paragraph = paragraph, subparagraph = abs2Match.Groups[1].Value
-							});
-					}
-				}
+			Match abs2Match = UndAlphaNum.Match(following, 0);
+			if (abs2Match.Success || abs2Match.Index == 0) {
+				AddReference(lawDefinedIn,
+					new LawRef {
+						shorthand = lawDefinedIn.shorthand,
+						paragraph = paragraph, subparagraph = abs2Match.Groups[1].Value
+					});
 			}
 		}
 		else {
@@ -69,11 +64,11 @@ public class ReferenceProcessor {
 		}
 	}
 
-	private static bool AddReference(LawRef references, LawRef referenced) {
+	private static void AddReference(LawRef references, LawRef referenced) {
 		Paragraph firstPar = Program.root.statues.FirstOrDefault(x => referenced.shorthand == x.shorthand)?.paragraphs
 			.FirstOrDefault(x => x.number == referenced.paragraph);
 		if (firstPar is null) {
-			return false;
+			return;
 		}
 
 		if (referenced.subparagraph is null && firstPar.hasSubparagraphs) {
@@ -87,14 +82,13 @@ public class ReferenceProcessor {
 		else {
 			Subparagraph sb = firstPar.subparagraphs.FirstOrDefault(x => x.number == referenced.subparagraph);
 			if (sb is null) {
-				return false;
+				return;
 			}
 
 			sb.AddRequired(references);
 		}
 
 		Program.refcnt++;
-		return true;
 	}
 }
 }
