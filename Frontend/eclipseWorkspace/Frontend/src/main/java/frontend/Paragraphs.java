@@ -30,4 +30,8 @@ public class Paragraphs {
 	public void setSubparagraphs(Subparagraphs[] subparagraphs) {
 		Subparagraphs = subparagraphs;
 	}
+	
+	public String toString() {
+		return Number; 
+	}
 }

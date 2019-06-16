@@ -19,4 +19,8 @@ public class Subparagraphs {
 	public void setNumber(String Number) {
 		this.Number = Number;
 	}
+	
+	public String toString() {
+		return Number;
+	}
 }

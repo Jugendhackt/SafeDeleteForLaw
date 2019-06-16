@@ -24,4 +24,8 @@ public class RequiredBy {
 	public void setSubparagraph(String Subparagraph) {
 		this.Subparagraph = Subparagraph;
 	}
+	
+	public String toString() {
+		return "(" + getShorthand() + ") §" + getParagraph() + " §§" + getSubparagraph(); 
+	}
 }
