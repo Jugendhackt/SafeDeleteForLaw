@@ -7,6 +7,7 @@ public class ReferenceProcessor {
 	private static readonly Regex AlphaNum = new Regex("(\\d+\\w?)");
 	private static readonly Regex AlphaNumEnd = new Regex("(\\d+\\w?)(\\ |\\,|\\.)");
 	private static readonly Regex ArtikelN = new Regex(" (?:Artikel\\ |Art\\.\\ |§\\ )(\\d+\\w?)(\\ |\\,|\\.)");
+	private static readonly Regex UndAlphaNum = new Regex(" und (\\d+\\w?)(\\ |\\,|\\.)");
 
 	public static void ReferenceDetector() {
 		foreach ((LawRef context, string searchText) in Program.toProcess) {
