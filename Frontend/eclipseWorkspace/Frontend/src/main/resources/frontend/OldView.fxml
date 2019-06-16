@@ -15,11 +15,10 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
             <Button fx:id="backButton" disable="true" mnemonicParsing="false" onMousePressed="#backButtonAction" text="Zurück" />
-            <Pane prefHeight="28.0" prefWidth="62.0" />
+            <Pane prefHeight="28.0" prefWidth="99.0" />
             <TextField fx:id="searchTextField" promptText="Suchwort .." />
           <Button fx:id="searchButton" mnemonicParsing="false" onMousePressed="#searchButtonAction" text="Suchen" />
-            <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="62.0" />
-            <Button fx:id="checkButton" disable="true" mnemonicParsing="false" onMousePressed="#checkButtonAction" text="Checken" />
+            <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="99.0" />
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onMousePressed="#deleteButtonAction" text="Löschen" />
         </items>
       </ToolBar>

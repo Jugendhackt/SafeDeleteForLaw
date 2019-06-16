@@ -1,11 +1,16 @@
 package frontend;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,9 +43,6 @@ public class Controller {
 		private Pane placeholderPane;
 
 		@FXML
-    	private Button checkButton;
-
-		@FXML
 		private Button deleteButton;
 		
 	    @FXML
@@ -63,6 +65,8 @@ public class Controller {
 
     	private int listViewStatus = 0;
     	private Root r;
+    	private String json;
+    	private Paragraphs[] p;
     	
     	@FXML
         void backButtonAction(MouseEvent event) {
@@ -86,21 +90,16 @@ public class Controller {
     			statuesListView.setDisable(true);
     		}
         }
-    	
-	    @FXML
-	    void checkButtonAction(MouseEvent event) {
-	    	
-	    }
 
 	    @FXML
 	    void deleteButtonAction(MouseEvent event) {
-
+	    	deleteButton.setDisable(true);
 	    }
 	    
 	    @FXML
 	    void statuesListViewAction(MouseEvent event) {
 	    	if(statuesListView.getSelectionModel().getSelectedItem() != null) {
-	    		checkButton.setDisable(false);
+	    		deleteButton.setDisable(false);
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
 	    				listViewStatus = 1;
@@ -126,7 +125,29 @@ public class Controller {
 	    
 	    @FXML
 	    void paragraphsListViewsubparagraphsListView(MouseEvent event) {
-
+	    	if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
+	    		deleteButton.setDisable(false);
+	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
+	    			if(event.getClickCount() == 2) {
+	    				listViewStatus = 2;
+	    				backButton.setDisable(false);
+	    				
+	    				referListView.toFront();
+	    				referListView.setDisable(false);
+	    				
+	    				ObservableList<String> referItems = FXCollections.observableArrayList();
+	    				
+	    				referItems = getRefers();
+	    				
+	    				referListView.setItems(referItems);
+	    				referListView.setVisible(true);
+	    				
+	    				paragraphsListView.setDisable(true);
+	    				paragraphsListView.toBack();
+	    				listViewStackPane.toBack();
+	    			}
+	    		}
+	    	}
 	    }
 	    
 	    @FXML
@@ -251,7 +272,6 @@ public class Controller {
 	        assert searchTextField != null : "fx:id=\"searchTextField\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert searchButton != null : "fx:id=\"searchButton\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert placeholderPane != null : "fx:id=\"placeholderPane\" was not injected: check your FXML file 'OldView.fxml'.";
-	        assert checkButton != null : "fx:id=\"checkButton\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert titleLabel != null : "fx:id=\"titleLabel\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert listViewStackPane != null : "fx:id=\"listViewStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
@@ -260,8 +280,9 @@ public class Controller {
 	        assert paragraphsListView != null : "fx:id=\"paragraphsListView\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert statuesStackPane != null : "fx:id=\"listViewInnerStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert statuesListView != null : "fx:id=\"statuesListView\" was not injected: check your FXML file 'OldView.fxml'.";
-	        
+	        	        
 	        setItems();
+	        setJSON();
 	    }
 	    
 	    private void setItems() {
@@ -293,6 +314,7 @@ public class Controller {
 			for(int i = 0; i < r.getStatues().length; i++) {
 				if(statuesListView.getSelectionModel().getSelectedItem().contains(r.getStatues()[i].getFullname())) {
 					titleLabel.setText(r.getStatues()[i].getShorthand() + " - Paragraphen");	
+					p = r.getStatues()[i].getParagraphs();
 					for(int k = 0; k < r.getStatues()[i].getParagraphs().length; k++) {
     					item = "";
     					item += r.getStatues()[i].getParagraphs()[k].getNumber();
@@ -307,4 +329,46 @@ public class Controller {
 			
 			return paragraphItems;
 	    }
-}
+	    
+	    private void setJSON() {
+	    	BufferedReader br = null;
+	    	
+	    	try {
+		    	br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/root.json"));
+		    	String line = br.readLine();
+
+	    	    while (line != null) {
+	    	    	json += line;
+	    	        line = br.readLine();
+	    	    }
+	    	} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+	    	    try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	    	}
+	    }
+	    
+	    private ObservableList<String> getRefers() {
+	    	ObservableList<String> referItems = FXCollections.observableArrayList();	    	
+	    	Subparagraphs sub = null;
+	    	
+	    	for(int i = 0; i < p.length; i++) {
+	    		if(paragraphsListView.getSelectionModel().getSelectedItem().equals(p[i].getNumber())) {
+	    			
+	    			for(int j = 0; j < p[i].getSubparagraphs().length; j++) {
+	    				sub = p[i].getSubparagraphs()[j];
+	    				System.out.println(sub.getNumber());
+	    			}
+	    		}
+	    	}
+	    	
+			
+			return referItems;
+	    }
+ }
