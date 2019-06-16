@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,6 +92,16 @@ public class Controller {
     			
     			statuesStackPane.toBack();
     			statuesListView.setDisable(true);
+    			
+    		} else if(listViewStatus == 3) {
+    			listViewStatus = 2;
+    			subListView.toFront();
+    			subListView.setDisable(false);
+    			
+    			referStackPane.toBack();
+    			referListView.setDisable(true);
+    			statuesStackPane.toBack();
+    			statuesListView.setDisable(true);
     		}
         }
 
@@ -118,6 +126,9 @@ public class Controller {
 	    				
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
                         paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
+                        
+                        if(paragraphItems.isEmpty())
+                        	System.out.println(1);
 
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
@@ -148,6 +159,9 @@ public class Controller {
 	    				
 	    				subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
 	    				
+	    				if(subItems.isEmpty())
+                        	System.out.println(2);
+	    				
 	    				subListView.setItems(subItems);
 	    				subListView.setVisible(true);
 	    				
@@ -172,8 +186,10 @@ public class Controller {
 	    				referListView.setDisable(false);
 	    				
 	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
+	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());
 	    				
-	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getRequired());
+	    				if(referItems.isEmpty())
+//                        	referItems.add();
 	    				
 	    				referListView.setItems(referItems);
 	    				referListView.setVisible(true);

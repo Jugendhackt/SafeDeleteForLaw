@@ -32,6 +32,9 @@ public class Paragraphs {
 	}
 	
 	public String toString() {
-		return Number; 
+		if(Character.isDigit(getNumber().charAt(0)))
+			return "§ " + getNumber();
+		else
+			return getNumber();
 	}
 }

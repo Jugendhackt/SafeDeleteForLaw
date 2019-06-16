@@ -26,6 +26,8 @@ public class RequiredBy {
 	}
 	
 	public String toString() {
+		if(getParagraph() == null)
+			System.out.println(1);
 		return "(" + getShorthand() + ") §" + getParagraph() + " §§" + getSubparagraph(); 
 	}
 }

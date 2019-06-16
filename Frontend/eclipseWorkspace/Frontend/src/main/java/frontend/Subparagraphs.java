@@ -2,14 +2,14 @@ package frontend;
 
 public class Subparagraphs {
 	private String Number;
-	private RequiredBy[] Required;
+	private RequiredBy[] requiredby;
 
-	public RequiredBy[] getRequired() {
-		return Required;
+	public RequiredBy[] getrequiredby() {
+		return requiredby;
 	}
 
-	public void setRequired(RequiredBy[] required) {
-		Required = required;
+	public void setrequiredby(RequiredBy[] requiredby) {
+		this.requiredby = requiredby;
 	}
 
 	public String getNumber() {
@@ -21,6 +21,9 @@ public class Subparagraphs {
 	}
 	
 	public String toString() {
-		return Number;
+		if(Character.isDigit(getNumber().charAt(0)))
+			return "§§ " + getNumber();
+		else
+			return getNumber();
 	}
 }
