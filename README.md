@@ -4,7 +4,7 @@ It uses german law info from the government site ([gesetze-im-internet.de](geset
 
 It is divided in:
  - a frontend (javafx)
- - two backend (both c#, netcoreapp 2.2):
+ - two backend2 (both c#, netcoreapp 2.2):
    - One for crawling the laws in xml form (takes depending on your internet connection about one hour) 
    - one to detect references (takes depending on your hardware around one minute).
  - one json file for data exchange ([spec](./ExchangeJsonSpec.md))
