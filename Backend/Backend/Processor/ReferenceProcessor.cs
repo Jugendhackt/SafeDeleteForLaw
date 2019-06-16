@@ -6,20 +6,20 @@ namespace Processor {
 public class ReferenceProcessor {
 	private static readonly Regex AlphaNum = new Regex("(\\d+\\w?)");
 	private static readonly Regex AlphaNumEnd = new Regex("(\\d+\\w?)(\\ |\\,|\\.)");
-	private static readonly Regex ArtikelN = new Regex("(?:Artikel\\ |Art\\.\\ |§\\ )(\\d+\\w?)(\\ |\\,|\\.)");
+	private static readonly Regex ArtikelN = new Regex(" (?:Artikel\\ |Art\\.\\ |§\\ )(\\d+\\w?)(\\ |\\,|\\.)");
 
 	public static void ReferenceDetector() {
-		foreach ((LawRef, string) searchTuple in Program.toProcess) {
-			foreach (Match match in ArtikelN.Matches(searchTuple.Item2)) {
-				string following = searchTuple.Item2.Substring(match.Index + match.Length);
+		foreach ((LawRef context, string searchText) in Program.toProcess) {
+			foreach (Match match in ArtikelN.Matches(searchText)) {
+				string following = searchText.Substring(match.Index + match.Length);
 				string paragraph = match.Groups[1].Value;
 
-				HandleArtikelnMatch(following, searchTuple.Item1, paragraph, match.Groups[2].Value == ",");
+				HandleArtikelNMatch(following, context, paragraph, match.Groups[2].Value == ",");
 			}
 		}
 	}
 
-	static void HandleArtikelnMatch(string following, LawRef lawDefinedIn, string paragraph, bool cont) {
+	static void HandleArtikelNMatch(string following, LawRef lawDefinedIn, string paragraph, bool cont) {
 		if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
 			following = following.Substring(following.IndexOf(' ') + 1);
 			Match absMatch = AlphaNum.Match(following);
@@ -62,7 +62,7 @@ public class ReferenceProcessor {
 			if (cont && following.Length > 1) {
 				following = following.Substring(1);
 				Match nextArtMatch = AlphaNumEnd.Match(following);
-				HandleArtikelnMatch(following.Substring(nextArtMatch.Index + nextArtMatch.Length), lawDefinedIn,
+				HandleArtikelNMatch(following.Substring(nextArtMatch.Index + nextArtMatch.Length), lawDefinedIn,
 					nextArtMatch.Groups[1].Value, nextArtMatch.Groups[2].Value == ",");
 			}
 		}

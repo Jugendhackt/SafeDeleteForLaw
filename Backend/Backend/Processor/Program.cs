@@ -13,6 +13,7 @@ public static class Program {
 	/// All text to process
 	/// </summary>
 	public static List<(LawRef, string)> toProcess = new List<(LawRef, string)>();
+
 	public static JsonRoot root;
 	public static int refcnt;
 
@@ -28,7 +29,8 @@ public static class Program {
 
 		File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
 		Console.WriteLine(
-			$"Found {root.statues.Sum(x => x.paragraphs.Count)} paragraphs {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))} subpars and {toProcess.Count} textblocks and {refcnt} references, the json is {new FileInfo("root.json").Length} byte big");
+			$"Found {root.statues.Sum(x => x.paragraphs.Count)} paragraphs {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))}" +
+			$" subpars and {toProcess.Count} textblocks and {refcnt} references, the json is {new FileInfo("root.json").Length:N} byte big");
 	}
 }
 }
