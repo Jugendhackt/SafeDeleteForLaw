@@ -66,7 +66,7 @@ public class Controller {
     	private int listViewStatus = 0;
     	private Root r;
     	private String json;
-    	private Paragraphs[] p;
+    	private Paragraphs p;
     	
     	@FXML
         void backButtonAction(MouseEvent event) {
@@ -313,6 +313,7 @@ public class Controller {
 			
 			for(int i = 0; i < r.getStatues().length; i++) {
 				if(statuesListView.getSelectionModel().getSelectedItem().contains(r.getStatues()[i].getFullname())) {
+					
 					titleLabel.setText(r.getStatues()[i].getShorthand() + " - Paragraphen");	
 					p = r.getStatues()[i].getParagraphs();
 					for(int k = 0; k < r.getStatues()[i].getParagraphs().length; k++) {
@@ -358,15 +359,6 @@ public class Controller {
 	    	ObservableList<String> referItems = FXCollections.observableArrayList();	    	
 	    	Subparagraphs sub = null;
 	    	
-	    	for(int i = 0; i < p.length; i++) {
-	    		if(paragraphsListView.getSelectionModel().getSelectedItem().equals(p[i].getNumber())) {
-	    			
-	    			for(int j = 0; j < p[i].getSubparagraphs().length; j++) {
-	    				sub = p[i].getSubparagraphs()[j];
-	    				System.out.println(sub.getNumber());
-	    			}
-	    		}
-	    	}
 	    	
 			
 			return referItems;
