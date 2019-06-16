@@ -90,8 +90,8 @@ public class Controller {
     			paragraphsListView.toFront();
     			paragraphsListView.setDisable(false);
     			
-    			statuesStackPane.toBack();
-    			statuesListView.setDisable(true);
+    			subStackPane.toBack();
+    			subListView.setDisable(true);
     			
     		} else if(listViewStatus == 3) {
     			listViewStatus = 2;
@@ -100,8 +100,6 @@ public class Controller {
     			
     			referStackPane.toBack();
     			referListView.setDisable(true);
-    			statuesStackPane.toBack();
-    			statuesListView.setDisable(true);
     		}
         }
 
@@ -117,6 +115,7 @@ public class Controller {
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
 	    				listViewStatus = 1;
+	    				
 	    				backButton.setDisable(false);
 	    				
 	    				titleLabel.setText("Paragraphen");
@@ -126,6 +125,7 @@ public class Controller {
 	    				
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
                         paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
+                        
                         
                         if(paragraphItems.isEmpty())
                         	System.out.println(1);
@@ -147,8 +147,11 @@ public class Controller {
 	    		deleteButton.setDisable(false);
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
+	    				subStackPane.toFront();
 	    				listViewStatus = 2;
 	    				backButton.setDisable(false);
+	    				
+	    				titleLabel.setText("Subparagraphen");
 	    				
 	    				titleLabel.setText(paragraphsListView.getSelectionModel().getSelectedItem().toString() + " - Subparagraphen");
 	    				
@@ -179,14 +182,25 @@ public class Controller {
 	    		deleteButton.setDisable(false);
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
+	    				referStackPane.toFront();
 	    				listViewStatus = 3;
 	    				backButton.setDisable(false);
+	    				
+	    				titleLabel.setText("Verweise");
 	    				
 	    				referListView.toFront();
 	    				referListView.setDisable(false);
 	    				
 	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
 	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());
+
+	    				
+	    				referStackPane.toFront();
+	    				subStackPane.toBack();
+	    				listViewStackPane.toBack();
+	    				statuesStackPane.toBack();
+	    				
+	    				System.out.println(subListView.getSelectionModel().getSelectedItem().getrequiredby().length);
 	    				
 	    				if(referItems.isEmpty())
 //                        	referItems.add();
@@ -362,8 +376,8 @@ public class Controller {
 
 			for(int i = 0; i < r.getStatues().length; i++) {
 				if(statuesListView.getSelectionModel().getSelectedItem().toString().contains(r.getStatues()[i].getFullname())) {
-					
-					titleLabel.setText(r.getStatues()[i].getShorthand() + " - Paragraphen");	
+					//r.getStatues()[i].getShorthand() + " - 
+					titleLabel.setText("Paragraphen");	
 					p = r.getStatues()[i].getParagraphs();
 					for(int k = 0; k < r.getStatues()[i].getParagraphs().length; k++) {
     					item = "";

@@ -37,17 +37,17 @@
    <center>
       <StackPane fx:id="listViewStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="referStackPane" prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <ListView fx:id="referListView" onMousePressed="#referListViewAction" prefHeight="200.0" prefWidth="200.0" />
-               </children>
-            </StackPane>
+            <ListView fx:id="paragraphsListView" onMousePressed="#paragraphsListViewAction" prefHeight="200.0" prefWidth="200.0" />
             <StackPane fx:id="subStackPane" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="subListView" onMousePressed="#subListViewAction" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
-            <ListView fx:id="paragraphsListView" onMousePressed="#paragraphsListViewAction" prefHeight="200.0" prefWidth="200.0" />
+            <StackPane fx:id="referStackPane" prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="referListView" onMousePressed="#referListViewAction" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
             <StackPane fx:id="statuesStackPane" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="statuesListView" onMousePressed="#statuesListViewAction" prefHeight="326.0" prefWidth="374.0" />

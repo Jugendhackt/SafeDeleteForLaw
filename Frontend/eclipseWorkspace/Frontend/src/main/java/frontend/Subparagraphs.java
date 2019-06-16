@@ -21,9 +21,6 @@ public class Subparagraphs {
 	}
 	
 	public String toString() {
-		if(Character.isDigit(getNumber().charAt(0)))
-			return "§§ " + getNumber();
-		else
 			return getNumber();
 	}
 }
