@@ -30,7 +30,7 @@ public static class Program {
 		File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
 		Console.WriteLine(
 			$"Found {root.statues.Sum(x => x.paragraphs.Count)} paragraphs {root.statues.Sum(x => x.paragraphs.Sum(y => y.subparagraphs.Count))}" +
-			$" subpars and {toProcess.Count} textblocks and {refcnt} references, the json is {new FileInfo("root.json").Length:N} byte big");
+			$" subpars and {toProcess.Count} textblocks and {refcnt} references, the json is {new FileInfo("root.json").Length:N0} byte big");
 	}
 }
 }

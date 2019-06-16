@@ -78,11 +78,11 @@ public class ReferenceProcessor {
 
 		if (referenced.subparagraph is null && firstPar.hasSubparagraphs) {
 			foreach (Subparagraph subparagraph in firstPar.subparagraphs) {
-				subparagraph.requiredby.Add(references);
+				subparagraph.AddRequired(references);
 			}
 		}
 		else if (!firstPar.hasSubparagraphs) {
-			firstPar.subparagraphs.First().requiredby.Add(references);
+			firstPar.subparagraphs.First().AddRequired(references);
 		}
 		else {
 			Subparagraph sb = firstPar.subparagraphs.FirstOrDefault(x => x.number == referenced.subparagraph);
@@ -90,7 +90,7 @@ public class ReferenceProcessor {
 				return false;
 			}
 
-			sb.requiredby.Add(references);
+			sb.AddRequired(references);
 		}
 
 		Program.refcnt++;
