@@ -5,14 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -20,6 +25,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -126,9 +132,6 @@ public class Controller {
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
                         paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
                         
-                        
-                        if(paragraphItems.isEmpty())
-                        	System.out.println(1);
 
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
@@ -193,21 +196,37 @@ public class Controller {
 	    				
 	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
 	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());
-
 	    				
-	    				referStackPane.toFront();
-	    				subStackPane.toBack();
-	    				listViewStackPane.toBack();
-	    				statuesStackPane.toBack();
+	    				
+//	    				referListView.setVisible(true);
+//	    				referStackPane.setVisible(true);
+//	    				referListView.toFront();
+//	    				referStackPane.toFront();
+//	    				
+//	    				statuesListView.setVisible(false);
+//	    				statuesStackPane.setVisible(false);
+//	    				statuesListView.toBack();
+//	    				statuesStackPane.toBack();
+//	    				
+//	    				paragraphsListView.setVisible(false);
+//	    				listViewStackPane.setVisible(false);
+//	    				paragraphsListView.toBack();
+//	    				listViewStackPane.toBack();
 	    				
 	    				System.out.println(subListView.getSelectionModel().getSelectedItem().getrequiredby().length);
 	    				
-	    				if(referItems.isEmpty())
-//                        	referItems.add();
 	    				
+	    				if(referItems.isEmpty()) {
+	    					RequiredBy err = new RequiredBy();
+	    					err.setErrorMsg("Keine Einträge vorhanden!");
+	    					referItems.add(err);
+	    					
+                        	referListView.setItems(referItems);
+	    				}
+	    					
 	    				referListView.setItems(referItems);
 	    				referListView.setVisible(true);
-	    				
+	    					
 	    				subListView.setDisable(true);
 	    				subListView.toBack();
 	    				subStackPane.toBack();

@@ -4,8 +4,14 @@ public class RequiredBy {
 	private String Shorthand;
 	private String Paragraph;
 	private String Subparagraph;
+	private String errorMsg;
 	
-	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	public String getShorthand() {
 		return Shorthand;
 	}
@@ -26,7 +32,21 @@ public class RequiredBy {
 	}
 	
 	public String toString() {
-		System.out.println("(" + getShorthand() + ") §" + getParagraph() + " §§" + getSubparagraph());
-		return "(" + getShorthand() + ") §" + getParagraph() + " §§" + getSubparagraph(); 
+		if(errorMsg == null) {
+			try {
+				Integer.parseInt(getParagraph());
+				
+				if(getSubparagraph() != null)
+					return "(" + getShorthand() + ") §" + getParagraph() + " §§" + getSubparagraph(); 
+				else
+					return "(" + getShorthand() + ") §" + getParagraph();
+				
+			} catch(Exception e) {
+				return "(" + getShorthand() + ") " + getParagraph();
+			}
+			
+		} else {
+			return errorMsg;
+		}
 	}
 }

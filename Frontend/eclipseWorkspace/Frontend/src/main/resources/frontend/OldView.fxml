@@ -13,14 +13,14 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controller">
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <items>
+         <items>
             <Button fx:id="backButton" disable="true" mnemonicParsing="false" onMousePressed="#backButtonAction" text="Zurück" />
             <Pane prefHeight="28.0" prefWidth="99.0" />
             <TextField fx:id="searchTextField" promptText="Suchwort .." />
-          <Button fx:id="searchButton" mnemonicParsing="false" onMousePressed="#searchButtonAction" text="Suchen" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onMousePressed="#searchButtonAction" text="Suchen" />
             <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="99.0" />
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onMousePressed="#deleteButtonAction" text="Löschen" />
-        </items>
+         </items>
       </ToolBar>
    </bottom>
    <top>
@@ -38,14 +38,14 @@
       <StackPane fx:id="listViewStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ListView fx:id="paragraphsListView" onMousePressed="#paragraphsListViewAction" prefHeight="200.0" prefWidth="200.0" />
-            <StackPane fx:id="subStackPane" prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <ListView fx:id="subListView" onMousePressed="#subListViewAction" prefHeight="200.0" prefWidth="200.0" />
-               </children>
-            </StackPane>
             <StackPane fx:id="referStackPane" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="referListView" onMousePressed="#referListViewAction" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </StackPane>
+            <StackPane fx:id="subStackPane" prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="subListView" onMousePressed="#subListViewAction" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
             <StackPane fx:id="statuesStackPane" prefHeight="150.0" prefWidth="200.0">
