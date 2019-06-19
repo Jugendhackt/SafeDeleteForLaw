@@ -66,6 +66,7 @@ public class Controller {
     	
     	private int listViewStatus = 0;
     	private Root r;
+    	private String subPTitle, paragraphsTitle;
     	
     	@FXML
         void backButtonAction(MouseEvent event) {
@@ -88,13 +89,24 @@ public class Controller {
     			subStackPane.toBack();
     			subListView.setDisable(true);
     			
+    			titleLabel.setText(paragraphsTitle);
+    			
     		} else if(listViewStatus == 3) {
     			listViewStatus = 2;
     			subListView.toFront();
     			subListView.setDisable(false);
     			
+    			paragraphsListView.toBack();
+    			paragraphsListView.setDisable(true);
+    			
+    			statuesStackPane.toBack();
+    			statuesListView.setDisable(true);
+    			
     			referStackPane.toBack();
     			referListView.setDisable(true);
+    			
+    			titleLabel.setText(subPTitle);
+    			
     		}
         }
 
@@ -113,7 +125,8 @@ public class Controller {
 	    				
 	    				backButton.setDisable(false);
 	    				
-	    				titleLabel.setText("Paragraphen");
+	    				paragraphsTitle = statuesListView.getSelectionModel().getSelectedItem().getShorthand() + " - Paragraphen";
+	    				titleLabel.setText(paragraphsTitle);
 	    				
 	    				paragraphsListView.toFront();
 	        			paragraphsListView.setDisable(false);
@@ -143,9 +156,8 @@ public class Controller {
 	    				listViewStatus = 2;
 	    				backButton.setDisable(false);
 	    				
-	    				titleLabel.setText("Subparagraphen");
-	    				
-	    				titleLabel.setText(paragraphsListView.getSelectionModel().getSelectedItem().toString() + " - Subparagraphen");
+	    				subPTitle = paragraphsListView.getSelectionModel().getSelectedItem().toString() + " - Subparagraphen";
+	    				titleLabel.setText(subPTitle);
 	    				
 	    				subListView.toFront();
 	    				subListView.setDisable(false);

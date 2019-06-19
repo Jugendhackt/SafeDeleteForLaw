@@ -42,7 +42,7 @@ public class RequiredBy {
 					return "(" + getShorthand() + ") § " + getParagraph();
 				
 			} catch(Exception e) {
-				return getParagraph();
+				return "(" + getShorthand() + ") " + getParagraph();
 			}
 			
 		} else {
