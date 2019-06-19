@@ -75,8 +75,6 @@ public class Controller {
     	
     	private int listViewStatus = 0;
     	private Root r;
-    	private String json;
-    	private Paragraphs[] p;
     	
     	@FXML
         void backButtonAction(MouseEvent event) {
@@ -165,9 +163,6 @@ public class Controller {
 	    				
 	    				subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
 	    				
-	    				if(subItems.isEmpty())
-                        	System.out.println(2);
-	    				
 	    				subListView.setItems(subItems);
 	    				subListView.setVisible(true);
 	    				
@@ -195,26 +190,7 @@ public class Controller {
 	    				referListView.setDisable(false);
 	    				
 	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
-	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());
-	    				
-	    				
-//	    				referListView.setVisible(true);
-//	    				referStackPane.setVisible(true);
-//	    				referListView.toFront();
-//	    				referStackPane.toFront();
-//	    				
-//	    				statuesListView.setVisible(false);
-//	    				statuesStackPane.setVisible(false);
-//	    				statuesListView.toBack();
-//	    				statuesStackPane.toBack();
-//	    				
-//	    				paragraphsListView.setVisible(false);
-//	    				listViewStackPane.setVisible(false);
-//	    				paragraphsListView.toBack();
-//	    				listViewStackPane.toBack();
-	    				
-	    				System.out.println(subListView.getSelectionModel().getSelectedItem().getrequiredby().length);
-	    				
+	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());	    				
 	    				
 	    				if(referItems.isEmpty()) {
 	    					RequiredBy err = new RequiredBy();
@@ -370,7 +346,6 @@ public class Controller {
 	        assert statuesListView != null : "fx:id=\"statuesListView\" was not injected: check your FXML file 'OldView.fxml'.";
 
 	        setItems();
-	        setJSON();
 	    }
 	    
 	    private void setItems() {
@@ -387,62 +362,5 @@ public class Controller {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	    }
-	    
-	    private ObservableList<String> getParagraphs() {
-	    	ObservableList<String> paragraphItems = FXCollections.observableArrayList();
-	    	String item = "";
-
-			for(int i = 0; i < r.getStatues().length; i++) {
-				if(statuesListView.getSelectionModel().getSelectedItem().toString().contains(r.getStatues()[i].getFullname())) {
-					//r.getStatues()[i].getShorthand() + " - 
-					titleLabel.setText("Paragraphen");	
-					p = r.getStatues()[i].getParagraphs();
-					for(int k = 0; k < r.getStatues()[i].getParagraphs().length; k++) {
-    					item = "";
-    					item += r.getStatues()[i].getParagraphs()[k].getNumber();
-    					paragraphItems.add(item);
-    				}
-				}
-			}
-			
-			if(item.isEmpty()) {
-				paragraphItems.add("Keine Einträge vorhanden!");
-			} 
-			
-			return paragraphItems;
-	    }
-	    
-	    private void setJSON() {
-	    	BufferedReader br = null;
-	    	
-	    	try {
-		    	br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/root.json"));
-		    	String line = br.readLine();
-
-	    	    while (line != null) {
-	    	    	json += line;
-	    	        line = br.readLine();
-	    	    }
-	    	} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-	    	    try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	    	}
-	    }
-	    
-	    private ObservableList<Subparagraphs> getRefers() {
-	    	ObservableList<Subparagraphs> referItems = FXCollections.observableArrayList();	    	
-	    	Subparagraphs sub = null;
-	    	
-	    	
-			
-			return referItems;
 	    }
  }
