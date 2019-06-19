@@ -21,6 +21,6 @@ public class Subparagraphs {
 	}
 	
 	public String toString() {
-			return getNumber();
+		return "§§ " + getNumber();
 	}
 }

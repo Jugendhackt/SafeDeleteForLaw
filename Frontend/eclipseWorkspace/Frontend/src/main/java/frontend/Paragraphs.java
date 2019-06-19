@@ -33,7 +33,7 @@ public class Paragraphs {
 	
 	public String toString() {
 		if(Character.isDigit(getNumber().charAt(0)))
-			return "ยง " + getNumber();
+			return "ง " + getNumber();
 		else
 			return getNumber();
 	}

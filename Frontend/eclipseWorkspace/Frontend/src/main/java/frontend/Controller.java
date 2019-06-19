@@ -1,23 +1,15 @@
 package frontend;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -25,7 +17,6 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -86,7 +77,7 @@ public class Controller {
     			paragraphsListView.toBack();
     			paragraphsListView.setDisable(true);
     			
-    			titleLabel.setText("GesetzbÃ¼cher");
+    			titleLabel.setText("Gesetzbücher");
     			backButton.setDisable(true);
     			
     		} else if(listViewStatus == 2) {
@@ -194,7 +185,7 @@ public class Controller {
 	    				
 	    				if(referItems.isEmpty()) {
 	    					RequiredBy err = new RequiredBy();
-	    					err.setErrorMsg("Keine EintrÃ¤ge vorhanden!");
+	    					err.setErrorMsg("Keine Einträge vorhanden!");
 	    					referItems.add(err);
 	    					
                         	referListView.setItems(referItems);
@@ -289,7 +280,7 @@ public class Controller {
 	    			}
 		    	}
 	    	} else if(listViewStatus == 2) {
-	    		int referSize = subListView.getItems().size();
+	    		int subSize = subListView.getItems().size();
 		    	MultipleSelectionModel<Subparagraphs> model = subListView.getSelectionModel();
 		    	
 		    	LinkedList<Subparagraphs> getMatches = new LinkedList<Subparagraphs>();
@@ -297,7 +288,7 @@ public class Controller {
 		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
 
 		    		getMatches.clear();
-		    		for(int i = 0; i < referSize; i++) {
+		    		for(int i = 0; i < subSize; i++) {
 		    			if(subListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 		    				getMatches.add(subListView.getItems().get(i));
 		    			}
@@ -314,10 +305,45 @@ public class Controller {
 			    		}	
 	    			} else {
 
-	    				for(int i = 0; i < referSize; i++) {
+	    				for(int i = 0; i < subSize; i++) {
 	    	    			if(subListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 	    	    				model.select(i);
 	    	    				subListView.scrollTo(i);
+	    	    				break;
+	    	    			}
+	    	    		}
+	    			}
+		    	}
+	    	} else if(listViewStatus == 3) {
+	    		int referSize = referListView.getItems().size();
+		    	MultipleSelectionModel<RequiredBy> model = referListView.getSelectionModel();
+		    	
+		    	LinkedList<RequiredBy> getMatches = new LinkedList<RequiredBy>();
+
+		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
+
+		    		getMatches.clear();
+		    		for(int i = 0; i < referSize; i++) {
+		    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+		    				getMatches.add(referListView.getItems().get(i));
+		    			}
+		    		}
+		    		
+		    		if(model.getSelectedItem() != null && model.getSelectedIndex() != getMatches.size()-1) {
+
+		    			for(int i = model.getSelectedIndex()+1; i < referListView.getItems().size(); i++) {
+			    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+			    				model.select(i);
+			    				referListView.scrollTo(i);
+			    				break;
+			    			}
+			    		}	
+	    			} else {
+
+	    				for(int i = 0; i < referSize; i++) {
+	    	    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+	    	    				model.select(i);
+	    	    				referListView.scrollTo(i);
 	    	    				break;
 	    	    			}
 	    	    		}
@@ -355,7 +381,7 @@ public class Controller {
 		    	 ObjectMapper mapper = new ObjectMapper();
 		    	 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		    	 r = mapper.readValue(new File("/Users/Mitja/Desktop/root.json"), Root.class);
+		    	 r = mapper.readValue(new File("root.json"), Root.class);
                  statuesItems.addAll(r.getStatues());
 
 		    	 statuesListView.setItems(statuesItems);

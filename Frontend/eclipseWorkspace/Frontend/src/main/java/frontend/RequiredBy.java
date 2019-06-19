@@ -37,12 +37,12 @@ public class RequiredBy {
 				Integer.parseInt(getParagraph());
 				
 				if(getSubparagraph() != null)
-					return "(" + getShorthand() + ") ยง" + getParagraph() + " ยงยง" + getSubparagraph(); 
+					return "(" + getShorthand() + ") ง " + getParagraph() + " งง " + getSubparagraph(); 
 				else
-					return "(" + getShorthand() + ") ยง" + getParagraph();
+					return "(" + getShorthand() + ") ง " + getParagraph();
 				
 			} catch(Exception e) {
-				return "(" + getShorthand() + ") " + getParagraph();
+				return getParagraph();
 			}
 			
 		} else {
