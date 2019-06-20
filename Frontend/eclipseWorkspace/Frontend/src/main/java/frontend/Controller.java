@@ -1,15 +1,13 @@
 package frontend;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javafx.collections.FXCollections;
@@ -49,6 +47,9 @@ public class Controller {
 	    private StackPane listViewStackPane;
 
 	    @FXML
+	    private StackPane subStackPane;
+	    
+	    @FXML
 	    private StackPane referStackPane;
 	    
 	    @FXML
@@ -61,12 +62,14 @@ public class Controller {
     	private ListView<Paragraphs> paragraphsListView;
     
     	@FXML
-    	private ListView<Subparagraphs> referListView; // Vor√ºbergehend
+    	private ListView<Subparagraphs> subListView; // Vor√ºbergehend
 
+    	@FXML
+    	private ListView<RequiredBy> referListView;
+    	
     	private int listViewStatus = 0;
     	private Root r;
-    	private String json;
-    	private Paragraphs p;
+    	private String subPTitle, paragraphsTitle;
     	
     	@FXML
         void backButtonAction(MouseEvent event) {
@@ -78,7 +81,7 @@ public class Controller {
     			paragraphsListView.toBack();
     			paragraphsListView.setDisable(true);
     			
-    			titleLabel.setText("Gesetzb√ºcher");
+    			titleLabel.setText("Gesetzb¸cher");
     			backButton.setDisable(true);
     			
     		} else if(listViewStatus == 2) {
@@ -86,14 +89,97 @@ public class Controller {
     			paragraphsListView.toFront();
     			paragraphsListView.setDisable(false);
     			
+    			subStackPane.toBack();
+    			subListView.setDisable(true);
+    			
+    			titleLabel.setText(paragraphsTitle);
+    			
+    		} else if(listViewStatus == 3) {
+    			listViewStatus = 2;
+    			subListView.toFront();
+    			subListView.setDisable(false);
+    			
+    			paragraphsListView.toBack();
+    			paragraphsListView.setDisable(true);
+    			
     			statuesStackPane.toBack();
     			statuesListView.setDisable(true);
+    			
+    			referStackPane.toBack();
+    			referListView.setDisable(true);
+    			
+    			titleLabel.setText(subPTitle);
+    			
     		}
         }
 
 	    @FXML
 	    void deleteButtonAction(MouseEvent event) {
 	    	deleteButton.setDisable(true);
+	    	
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	if(listViewStatus == 0) {
+	    		String shorthand = statuesListView.getSelectionModel().getSelectedItem().getShorthand();
+		    	int index = statuesListView.getSelectionModel().getSelectedIndex();
+	    		
+	    		if(statuesListView.getSelectionModel().getSelectedItem() != null) {
+	    			statuesListView.getItems().remove(index);
+	    			
+	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
+	    			
+	    			for(int i = 0; i < r.getStatues().length; i++) {
+	    				if(!r.getStatues()[i].getShorthand().equals(shorthand)) {
+	    					if(i <= index) {
+	    						newStatues[i] = r.getStatues()[i];
+	    					} else {
+	    						newStatues[i-1] = r.getStatues()[i];
+	    					}
+	    				}
+	    			}
+	    			r.setStatues(newStatues);
+	    		}
+	    	} else if(listViewStatus == 1) {
+	    		String number = paragraphsListView.getSelectionModel().getSelectedItem().getNumber();
+		    	int index = paragraphsListView.getSelectionModel().getSelectedIndex();
+	    		
+	    		if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
+	    			paragraphsListView.getItems().remove(index);
+	    		
+	    			for(int j = 0; j < r.getStatues().length; j++) {
+	    				if(r.getStatues()[j].getShorthand().equals(statuesListView.getSelectionModel().getSelectedItem().getShorthand())) {
+	    					
+	    					Paragraphs[] newParagraphs = new Paragraphs[r.getStatues()[j].getParagraphs().length-1];
+	    					for(int i = 0; i < r.getStatues()[j].getParagraphs().length; i++) {
+	    	    				if(!r.getStatues()[j].getParagraphs()[i].getNumber().equals(number)) {
+	    	    					
+	    	    					if(i <= index) {
+	    	    						newParagraphs[i] = r.getStatues()[j].getParagraphs()[i];
+	    	    					} else {
+	    	    						newParagraphs[i-1] = r.getStatues()[j].getParagraphs()[i];
+	    	    					}
+	    	    				}
+	    	    			}
+	    	    			r.getStatues()[j].setParagraphs(newParagraphs);
+	    				}
+	    			}
+	    			
+	    			
+	    		}
+    		} else if(listViewStatus == 2) {
+
+    			int statIndex = statuesListView.getSelectionModel().getSelectedIndex();
+    			int paraIndex = paragraphsListView.getSelectionModel().getSelectedIndex();
+    			int subIndex = subListView.getSelectionModel().getSelectedIndex();
+    			
+	    		if(subListView.getSelectionModel().getSelectedItem() != null) {
+	    			subListView.getItems().remove(subIndex);
+	    			
+//	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
+//	    			for(int i = 0; i < )
+//	    			r.setStatues(newStatues);
+	    		}
+    		}
 	    }
 	    
 	    @FXML
@@ -103,14 +189,24 @@ public class Controller {
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
 	    				listViewStatus = 1;
+	    				
 	    				backButton.setDisable(false);
+	    				
+	    				paragraphsTitle = statuesListView.getSelectionModel().getSelectedItem().getShorthand() + " - Paragraphen";
+	    				titleLabel.setText(paragraphsTitle);
 	    				
 	    				paragraphsListView.toFront();
 	        			paragraphsListView.setDisable(false);
 	    				
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
-                        paragraphItems.addRange(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
-
+                        paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
+                                                
+                        if(paragraphItems.isEmpty()) {
+	    					Paragraphs err = new Paragraphs();
+	    					err.setErrorMsg("Keine Eintr‰ge vorhanden!");
+	    					paragraphItems.add(err);
+	    				} 
+                        
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
 	    				
@@ -123,23 +219,35 @@ public class Controller {
 	    }
 	    
 	    @FXML
-	    void paragraphsListViewsubparagraphsListView(MouseEvent event) {
+	    void paragraphsListViewAction(MouseEvent event) {
 	    	if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
 	    		deleteButton.setDisable(false);
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
+	    				subStackPane.toFront();
 	    				listViewStatus = 2;
 	    				backButton.setDisable(false);
 	    				
-	    				referListView.toFront();
-	    				referListView.setDisable(false);
+	    				subPTitle = paragraphsListView.getSelectionModel().getSelectedItem().toString() + " - Subparagraphen";
+	    				titleLabel.setText(subPTitle);
 	    				
-	    				ObservableList<String> referItems = FXCollections.observableArrayList();
+	    				subListView.toFront();
+	    				subListView.setDisable(false);
 	    				
-	    				referItems = getRefers();
+	    				ObservableList<Subparagraphs> subItems = FXCollections.observableArrayList();
 	    				
-	    				referListView.setItems(referItems);
-	    				referListView.setVisible(true);
+	    				if(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs() != null)
+	    					subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
+	    				
+	    				if(subItems.isEmpty()) {
+	    					Subparagraphs err = new Subparagraphs();
+	    					err.setErrorMsg("Keine Eintr‰ge vorhanden!");
+	    					subItems.add(err);
+	    				}
+	    				
+	    				
+	    				subListView.setItems(subItems);
+	    				subListView.setVisible(true);
 	    				
 	    				paragraphsListView.setDisable(true);
 	    				paragraphsListView.toBack();
@@ -150,23 +258,58 @@ public class Controller {
 	    }
 	    
 	    @FXML
+	    void subListViewAction(MouseEvent event) {
+	    	if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
+	    		deleteButton.setDisable(false);
+	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
+	    			if(event.getClickCount() == 2) {
+	    				referStackPane.toFront();
+	    				listViewStatus = 3;
+	    				backButton.setDisable(false);
+	    				
+	    				titleLabel.setText("Verweise");
+	    				
+	    				referListView.toFront();
+	    				referListView.setDisable(false);
+	    				
+	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
+	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());	    				
+	    				
+	    				if(referItems.isEmpty()) {
+	    					RequiredBy err = new RequiredBy();
+	    					err.setErrorMsg("Keine Eintr‰ge vorhanden!");
+	    					referItems.add(err);
+	    				}
+	    					
+	    				referListView.setItems(referItems);
+	    				referListView.setVisible(true);
+	    					
+	    				subListView.setDisable(true);
+	    				subListView.toBack();
+	    				subStackPane.toBack();
+	    			}
+	    		}
+	    	}
+	    }
+	    
+	    @FXML
 	    void referListViewAction(MouseEvent event) {
-
+	    	
 	    }
 	    
 	    @FXML
 	    void searchButtonAction(MouseEvent event) {
 	    	if(listViewStatus == 0) {
 	    		int lawSize = statuesListView.getItems().size();
-		    	MultipleSelectionModel<String> model = statuesListView.getSelectionModel();
+		    	MultipleSelectionModel<Statues> model = statuesListView.getSelectionModel();
 		    	
-		    	LinkedList<String> getMatches = new LinkedList<String>();
+		    	LinkedList<Statues> getMatches = new LinkedList<Statues>();
 
 		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
 
 		    		getMatches.clear();
 		    		for(int i = 0; i < lawSize; i++) {
-		    			if(statuesListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+		    			if(statuesListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 		    				getMatches.add(statuesListView.getItems().get(i));
 		    			}
 		    		}
@@ -174,7 +317,7 @@ public class Controller {
 		    		if(model.getSelectedItem() != null && model.getSelectedIndex() != getMatches.size()-1) {
 
 		    			for(int i = model.getSelectedIndex()+1; i < statuesListView.getItems().size(); i++) {
-			    			if(statuesListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+			    			if(statuesListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 			    				model.select(i);
 			    				statuesListView.scrollTo(i);
 			    				break;
@@ -183,7 +326,7 @@ public class Controller {
 	    			} else {
 
 	    				for(int i = 0; i < lawSize; i++) {
-	    	    			if(statuesListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+	    	    			if(statuesListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 	    	    				model.select(i);
 	    	    				statuesListView.scrollTo(i);
 	    	    				break;
@@ -193,15 +336,15 @@ public class Controller {
 		    	}
 	    	} else if(listViewStatus == 1) {
 	    		int pargraphsSize = paragraphsListView.getItems().size();
-		    	MultipleSelectionModel<String> model = paragraphsListView.getSelectionModel();
+		    	MultipleSelectionModel<Paragraphs> model = paragraphsListView.getSelectionModel();
 		    	
-		    	LinkedList<String> getMatches = new LinkedList<String>();
+		    	LinkedList<Paragraphs> getMatches = new LinkedList<Paragraphs>();
 
 		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
 
 		    		getMatches.clear();
 		    		for(int i = 0; i < pargraphsSize; i++) {
-		    			if(paragraphsListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+		    			if(paragraphsListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 		    				getMatches.add(paragraphsListView.getItems().get(i));
 		    			}
 		    		}
@@ -209,7 +352,7 @@ public class Controller {
 		    		if(model.getSelectedItem() != null && model.getSelectedIndex() != getMatches.size()-1) {
 
 		    			for(int i = model.getSelectedIndex()+1; i < paragraphsListView.getItems().size(); i++) {
-			    			if(paragraphsListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+			    			if(paragraphsListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 			    				model.select(i);
 			    				paragraphsListView.scrollTo(i);
 			    				break;
@@ -218,7 +361,7 @@ public class Controller {
 	    			} else {
 
 	    				for(int i = 0; i < pargraphsSize; i++) {
-	    	    			if(paragraphsListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+	    	    			if(paragraphsListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 	    	    				model.select(i);
 	    	    				paragraphsListView.scrollTo(i);
 	    	    				break;
@@ -227,16 +370,51 @@ public class Controller {
 	    			}
 		    	}
 	    	} else if(listViewStatus == 2) {
-	    		int referSize = referListView.getItems().size();
-		    	MultipleSelectionModel<String> model = referListView.getSelectionModel();
+	    		int subSize = subListView.getItems().size();
+		    	MultipleSelectionModel<Subparagraphs> model = subListView.getSelectionModel();
 		    	
-		    	LinkedList<String> getMatches = new LinkedList<String>();
+		    	LinkedList<Subparagraphs> getMatches = new LinkedList<Subparagraphs>();
+
+		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
+
+		    		getMatches.clear();
+		    		for(int i = 0; i < subSize; i++) {
+		    			if(subListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+		    				getMatches.add(subListView.getItems().get(i));
+		    			}
+		    		}
+		    		
+		    		if(model.getSelectedItem() != null && model.getSelectedIndex() != getMatches.size()-1) {
+
+		    			for(int i = model.getSelectedIndex()+1; i < subListView.getItems().size(); i++) {
+			    			if(subListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+			    				model.select(i);
+			    				subListView.scrollTo(i);
+			    				break;
+			    			}
+			    		}	
+	    			} else {
+
+	    				for(int i = 0; i < subSize; i++) {
+	    	    			if(subListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+	    	    				model.select(i);
+	    	    				subListView.scrollTo(i);
+	    	    				break;
+	    	    			}
+	    	    		}
+	    			}
+		    	}
+	    	} else if(listViewStatus == 3) {
+	    		int referSize = referListView.getItems().size();
+		    	MultipleSelectionModel<RequiredBy> model = referListView.getSelectionModel();
+		    	
+		    	LinkedList<RequiredBy> getMatches = new LinkedList<RequiredBy>();
 
 		    	if(!searchTextField.getText().isEmpty() || searchTextField.getText() != null) {
 
 		    		getMatches.clear();
 		    		for(int i = 0; i < referSize; i++) {
-		    			if(referListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+		    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 		    				getMatches.add(referListView.getItems().get(i));
 		    			}
 		    		}
@@ -244,7 +422,7 @@ public class Controller {
 		    		if(model.getSelectedItem() != null && model.getSelectedIndex() != getMatches.size()-1) {
 
 		    			for(int i = model.getSelectedIndex()+1; i < referListView.getItems().size(); i++) {
-			    			if(referListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+			    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 			    				model.select(i);
 			    				referListView.scrollTo(i);
 			    				break;
@@ -253,7 +431,7 @@ public class Controller {
 	    			} else {
 
 	    				for(int i = 0; i < referSize; i++) {
-	    	    			if(referListView.getItems().get(i).toLowerCase().contains(searchTextField.getText().toLowerCase())) {
+	    	    			if(referListView.getItems().get(i).toString().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
 	    	    				model.select(i);
 	    	    				referListView.scrollTo(i);
 	    	    				break;
@@ -263,6 +441,7 @@ public class Controller {
 		    	}
 	    	}
 	    }
+
 
 
 	    @FXML
@@ -276,12 +455,13 @@ public class Controller {
 	        assert listViewStackPane != null : "fx:id=\"listViewStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert referStackPane != null : "fx:id=\"referStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert referListView != null : "fx:id=\"referListView\" was not injected: check your FXML file 'OldView.fxml'.";
+	        assert subStackPane != null : "fx:id=\"subStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
+	        assert subListView != null : "fx:id=\"subListView\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert paragraphsListView != null : "fx:id=\"paragraphsListView\" was not injected: check your FXML file 'OldView.fxml'.";
-	        assert statuesStackPane != null : "fx:id=\"listViewInnerStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
+	        assert statuesStackPane != null : "fx:id=\"statuesStackPane\" was not injected: check your FXML file 'OldView.fxml'.";
 	        assert statuesListView != null : "fx:id=\"statuesListView\" was not injected: check your FXML file 'OldView.fxml'.";
-	        	        
+
 	        setItems();
-	        setJSON();
 	    }
 	    
 	    private void setItems() {
@@ -291,8 +471,8 @@ public class Controller {
 		    	 ObjectMapper mapper = new ObjectMapper();
 		    	 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-		    	 r = mapper.readValue(new File("/Users/Mitja/Desktop/root.json"), Root.class);
-                 statuesItems.addRange(r.getStatues());
+		    	 r = mapper.readValue(new File("root.json"), Root.class);
+                 statuesItems.addAll(r.getStatues());
 
 		    	 statuesListView.setItems(statuesItems);
 			} catch (IOException e) {
@@ -300,60 +480,13 @@ public class Controller {
 			}
 	    }
 	    
-	    private ObservableList<String> getParagraphs() {
-	    	ObservableList<String> paragraphItems = FXCollections.observableArrayList();
-	    	String item = "";
-
-			for(int i = 0; i < r.getStatues().length; i++) {
-				if(statuesListView.getSelectionModel().getSelectedItem().contains(r.getStatues()[i].getFullname())) {
-					
-					titleLabel.setText(r.getStatues()[i].getShorthand() + " - Paragraphen");	
-					p = r.getStatues()[i].getParagraphs();
-					for(int k = 0; k < r.getStatues()[i].getParagraphs().length; k++) {
-    					item = "";
-    					item += r.getStatues()[i].getParagraphs()[k].getNumber();
-    					paragraphItems.add(item);
-    				}
-				}
-			}
-			
-			if(item.isEmpty()) {
-				paragraphItems.add("Keine Eintr√§ge vorhanden!");
-			} 
-			
-			return paragraphItems;
-	    }
-	    
-	    private void setJSON() {
-	    	BufferedReader br = null;
-	    	
-	    	try {
-		    	br = new BufferedReader(new FileReader("/Users/Mitja/Desktop/root.json"));
-		    	String line = br.readLine();
-
-	    	    while (line != null) {
-	    	    	json += line;
-	    	        line = br.readLine();
-	    	    }
-	    	} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-	    	    try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	    private ObservableList checkForNull(ObservableList<?> check) {
+	    	for(int i = 0; i < check.size(); i++) {
+	    		if(check.get(i).toString().contains("null")) {
+	    			check.remove(i);
+	    		}
 	    	}
-	    }
-	    
-	    private ObservableList<String> getRefers() {
-	    	ObservableList<String> referItems = FXCollections.observableArrayList();	    	
-	    	Subparagraphs sub = null;
 	    	
-	    	
-			
-			return referItems;
+	    	return check;
 	    }
  }

@@ -10,7 +10,7 @@ public class FrontendApplication extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		Parent parent = FXMLLoader.load(getClass().getResource("oldView.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("OldView.fxml"));
 		Scene scene = new Scene(parent);
 		
 		stage.setScene(scene);
