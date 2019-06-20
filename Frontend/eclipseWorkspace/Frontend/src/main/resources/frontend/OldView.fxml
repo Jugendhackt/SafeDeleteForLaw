@@ -9,16 +9,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controller">
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
             <Button fx:id="backButton" disable="true" mnemonicParsing="false" onMousePressed="#backButtonAction" text="Zurück" />
-            <Pane prefHeight="28.0" prefWidth="99.0" />
+            <Pane prefHeight="28.0" prefWidth="99.0" HBox.hgrow="ALWAYS" />
             <TextField fx:id="searchTextField" promptText="Suchwort .." />
             <Button fx:id="searchButton" mnemonicParsing="false" onMousePressed="#searchButtonAction" text="Suchen" />
-            <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="99.0" />
+            <Pane fx:id="placeholderPane" prefHeight="28.0" prefWidth="99.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onMousePressed="#deleteButtonAction" text="Löschen" />
          </items>
       </ToolBar>

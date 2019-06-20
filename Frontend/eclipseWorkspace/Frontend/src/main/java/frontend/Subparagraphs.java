@@ -3,7 +3,14 @@ package frontend;
 public class Subparagraphs {
 	private String Number;
 	private RequiredBy[] requiredby;
-
+	private String errorMsg;
+	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	public RequiredBy[] getrequiredby() {
 		return requiredby;
 	}
@@ -21,6 +28,12 @@ public class Subparagraphs {
 	}
 	
 	public String toString() {
-		return "§§ " + getNumber();
+		if(errorMsg == null && getNumber() != null) {
+			return "§§ " + getNumber();
+		} else if(getNumber() == null)  {
+			return "Keine Einträge vorhanden!";
+		} else {
+			return errorMsg;
+		}
 	}
 }

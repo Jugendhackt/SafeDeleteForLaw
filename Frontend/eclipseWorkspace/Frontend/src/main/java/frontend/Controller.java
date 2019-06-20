@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -113,6 +116,62 @@ public class Controller {
 	    @FXML
 	    void deleteButtonAction(MouseEvent event) {
 	    	deleteButton.setDisable(true);
+	    	
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	if(listViewStatus == 0) {
+	    		String shorthand = statuesListView.getSelectionModel().getSelectedItem().getShorthand();
+		    	int index = statuesListView.getSelectionModel().getSelectedIndex();
+	    		
+	    		if(statuesListView.getSelectionModel().getSelectedItem() != null) {
+	    			statuesListView.getItems().remove(index);
+	    			
+	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
+	    			
+	    			for(int i = 0; i < r.getStatues().length; i++) {
+	    				if(!r.getStatues()[i].getShorthand().equals(shorthand)) {
+	    					if(i <= index) {
+	    						newStatues[i] = r.getStatues()[i];
+	    					} else {
+	    						newStatues[i-1] = r.getStatues()[i];
+	    					}
+	    				}
+	    			}
+	    			r.setStatues(newStatues);
+	    		}
+	    	} else if(listViewStatus == 1) {
+	    		String number = paragraphsListView.getSelectionModel().getSelectedItem().getNumber();
+		    	int index = paragraphsListView.getSelectionModel().getSelectedIndex();
+	    		
+	    		if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
+	    			paragraphsListView.getItems().remove(index);
+	    		
+	    			for(int j = 0; j < r.getStatues().length; j++) {
+	    				if(r.getStatues()[j].getShorthand().equals(statuesListView.getSelectionModel().getSelectedItem().getShorthand())) {
+	    					
+	    					Paragraphs[] newParagraphs = new Paragraphs[r.getStatues()[j].getParagraphs().length-1];
+	    					for(int i = 0; i < r.getStatues()[j].getParagraphs().length; i++) {
+	    	    				if(!r.getStatues()[j].getParagraphs()[i].getNumber().equals(number)) {
+	    	    					
+	    	    					if(i <= index) {
+	    	    						newParagraphs[i] = r.getStatues()[j].getParagraphs()[i];
+	    	    					} else {
+	    	    						newParagraphs[i-1] = r.getStatues()[j].getParagraphs()[i];
+	    	    					}
+	    	    				}
+	    	    			}
+	    	    			r.getStatues()[j].setParagraphs(newParagraphs);
+	    				}
+	    			}
+	    			
+	    			
+	    		}
+    		} else if(listViewStatus == 2) {
+
+	    		if(subListView.getSelectionModel().getSelectedItem() != null) {
+	    			
+	    		}
+    		}
 	    }
 	    
 	    @FXML
@@ -133,8 +192,13 @@ public class Controller {
 	    				
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
                         paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
+                                                
+                        if(paragraphItems.isEmpty()) {
+	    					Paragraphs err = new Paragraphs();
+	    					err.setErrorMsg("Keine Einträge vorhanden!");
+	    					paragraphItems.add(err);
+	    				} 
                         
-
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
 	    				
@@ -164,7 +228,15 @@ public class Controller {
 	    				
 	    				ObservableList<Subparagraphs> subItems = FXCollections.observableArrayList();
 	    				
-	    				subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
+	    				if(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs() != null)
+	    					subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
+	    				
+	    				if(subItems.isEmpty()) {
+	    					Subparagraphs err = new Subparagraphs();
+	    					err.setErrorMsg("Keine Einträge vorhanden!");
+	    					subItems.add(err);
+	    				}
+	    				
 	    				
 	    				subListView.setItems(subItems);
 	    				subListView.setVisible(true);
@@ -199,8 +271,6 @@ public class Controller {
 	    					RequiredBy err = new RequiredBy();
 	    					err.setErrorMsg("Keine Einträge vorhanden!");
 	    					referItems.add(err);
-	    					
-                        	referListView.setItems(referItems);
 	    				}
 	    					
 	    				referListView.setItems(referItems);
@@ -400,5 +470,15 @@ public class Controller {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+	    }
+	    
+	    private ObservableList checkForNull(ObservableList<?> check) {
+	    	for(int i = 0; i < check.size(); i++) {
+	    		if(check.get(i).toString().contains("null")) {
+	    			check.remove(i);
+	    		}
+	    	}
+	    	
+	    	return check;
 	    }
  }

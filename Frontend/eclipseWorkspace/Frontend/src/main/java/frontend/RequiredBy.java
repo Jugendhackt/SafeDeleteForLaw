@@ -44,7 +44,6 @@ public class RequiredBy {
 			} catch(Exception e) {
 				return "(" + getShorthand() + ") " + getParagraph();
 			}
-			
 		} else {
 			return errorMsg;
 		}
