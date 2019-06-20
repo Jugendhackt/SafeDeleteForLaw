@@ -168,8 +168,16 @@ public class Controller {
 	    		}
     		} else if(listViewStatus == 2) {
 
+    			int statIndex = statuesListView.getSelectionModel().getSelectedIndex();
+    			int paraIndex = paragraphsListView.getSelectionModel().getSelectedIndex();
+    			int subIndex = subListView.getSelectionModel().getSelectedIndex();
+    			
 	    		if(subListView.getSelectionModel().getSelectedItem() != null) {
+	    			subListView.getItems().remove(subIndex);
 	    			
+//	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
+//	    			for(int i = 0; i < )
+//	    			r.setStatues(newStatues);
 	    		}
     		}
 	    }

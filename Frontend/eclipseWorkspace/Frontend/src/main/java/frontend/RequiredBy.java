@@ -33,15 +33,13 @@ public class RequiredBy {
 	
 	public String toString() {
 		if(errorMsg == null) {
-			try {
-				Integer.parseInt(getParagraph());
-				
+			
+			if(Character.isDigit(getSubparagraph().charAt(0))) {
 				if(getSubparagraph() != null)
 					return "(" + getShorthand() + ") § " + getParagraph() + " §§ " + getSubparagraph(); 
 				else
 					return "(" + getShorthand() + ") § " + getParagraph();
-				
-			} catch(Exception e) {
+			} else {
 				return "(" + getShorthand() + ") " + getParagraph();
 			}
 		} else {

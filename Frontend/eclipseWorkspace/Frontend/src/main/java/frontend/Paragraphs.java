@@ -40,13 +40,13 @@ public class Paragraphs {
 	
 	public String toString() {
 		if(errorMsg == null && getNumber() != null) {
-			try {
-				Integer.parseInt(getNumber());
+			
+			if(Character.isDigit(getNumber().charAt(0))) {
 				return "§ " + getNumber();
-				
-			} catch(Exception e) {
+			} else {
 				return getNumber();
 			}
+			
 		} else if(getNumber() == null) {
 			return "Keine Einträge vorhanden!";
 		} else {
