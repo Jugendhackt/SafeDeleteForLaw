@@ -1,43 +1,67 @@
+using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using DataStructures;
-
 namespace Processor {
 public class ReferenceProcessor {
-	private static readonly Regex AlphaNum = new Regex("(\\d+\\w?)");
+	private static readonly Regex Enumeration = new Regex(" (\\d+\\w?)(\\ |\\,|\\.)");
 	private static readonly Regex AlphaNumEnd = new Regex("(\\d+\\w?)(\\ |\\,|\\.)");
 	private static readonly Regex ArtikelN = new Regex(" (?:Artikel\\ |Art\\.\\ |§\\ )(\\d+\\w?)(\\ |\\,|\\.)");
 	private static readonly Regex UndAlphaNum = new Regex(" und (\\d+\\w?)(\\ |\\,|\\.)");
+	private static readonly Regex AbsAlphaNum = new Regex("(?:Absatz||Abs.)\\ (\\d+\\w?)(\\ |\\,|\\.)");
 
 	public static void ReferenceDetector() {
-		foreach ((LawRef context, string searchText) in Program.toProcess) {
-			foreach (Match match in ArtikelN.Matches(searchText)) {
-				string following = searchText.Substring(match.Index + match.Length);
-				string paragraph = match.Groups[1].Value;
 
-				HandleArtikelNMatch(following, context, paragraph, match.Groups[2].Value == ",");
-			}
+foreach ((LawRef , string ) processingTuple in Program.toProcess) {
+	HandleProcessItem(processingTuple);
+}
+	}
+
+	public static void MCReferenceDetector() {
+		var threads = new Thread[Environment.ProcessorCount];
+		for (var i = 0; i < Environment.ProcessorCount; i++) {
+			threads[i] = new Thread(() => {
+				while (Program.toProcess.TryTake(out (LawRef, string) processTuple)) {
+					HandleProcessItem(processTuple);
+				}
+			});threads[i].Start();
+		}
+Console.WriteLine($"Starting actual processing of references at {DateTime.Now}");
+foreach (Thread thread in threads) {
+			thread.Join();
+		}
+
+		Console.WriteLine($"Joined all threads after at {DateTime.Now}");
+	}
+
+	private static void HandleProcessItem((LawRef, string) processingTuple) {
+		//Thread.Sleep(1);
+		foreach (Match match in ArtikelN.Matches(processingTuple.Item2)) {
+			string following = processingTuple.Item2.Substring(match.Index + match.Length);
+			string paragraph = match.Groups[1].Value;
+
+			HandleArtikelNMatch(following, processingTuple.Item1, paragraph, match.Groups[2].Value == ",");
 		}
 	}
 
 	static void HandleArtikelNMatch(string following, LawRef lawDefinedIn, string paragraph, bool cont) {
-		if (following.StartsWith("Absatz") || following.StartsWith("Abs.")) {
-			following = following.Substring(following.IndexOf(' ') + 1);
-			Match absMatch = AlphaNum.Match(following);
-			if (absMatch.Success && absMatch.Index == 0) {
-				AddReference(lawDefinedIn,
-					new LawRef {
-						shorthand = lawDefinedIn.shorthand,
-						paragraph = paragraph, subparagraph = absMatch.Groups[1].Value
-					});
-			}
-			else {
-				AddReference(lawDefinedIn,
-					new LawRef {
-						shorthand = lawDefinedIn.shorthand,
-						paragraph = paragraph
-					});
-				return;
+		Match absMatch = AbsAlphaNum.Match(following);
+		if (absMatch.Success && absMatch.Index == 0) {
+			following = following.Substring(absMatch.Length);
+			AddReference(lawDefinedIn,
+				new LawRef {
+					shorthand = lawDefinedIn.shorthand,
+					paragraph = paragraph, subparagraph = absMatch.Groups[1].Value
+				});
+			if (absMatch.Groups[2].Value == ",") {
+				Match enumerationMatch = Enumeration.Match(following);
+				if (enumerationMatch.Success && enumerationMatch.Index == 0) {
+					following = following.Substring(enumerationMatch.Length);
+					HandleArtikelNMatch(following, lawDefinedIn, paragraph, enumerationMatch.Groups[2].Value == ",");
+					return;
+				}
 			}
 
 			Match abs2Match = UndAlphaNum.Match(following, 0);

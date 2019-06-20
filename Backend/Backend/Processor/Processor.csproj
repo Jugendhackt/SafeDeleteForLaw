@@ -7,7 +7,6 @@
 	
 	<ItemGroup>
 	  <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
-	  <ProjectReference Include="..\Downloader\Downloader.csproj" />
 	</ItemGroup>
 	
 	<ItemGroup>

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using DataStructures;
 
@@ -22,13 +23,14 @@ public class MetadataProcessor {
 		toUse.shorthand = shorthand;
 		LoadParagraphMetadata(file, toUse);
 	}
-
+	
 	/// <summary>
 	/// Later to be used to remove inline xml
 	/// </summary>
 	/// <param name="org"></param>
 	/// <returns></returns>
-	private static string rmXml(string org) => org;
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static string RmXml(string org) => org;
 
 	private static void LoadParagraphMetadata(XDocument file, Statue toUse) {
 		if (file.Root is null) {
@@ -66,7 +68,7 @@ public class MetadataProcessor {
 			string subpar = null;
 			if (textData.Element("text") != null) {
 				foreach (XElement pars in textData.Element("text").Element("Content").Elements("P")) {
-					string xmlFreeVal = rmXml(pars.Value);
+					string xmlFreeVal = RmXml(pars.Value);
 					if (xmlFreeVal.StartsWith('(') && xmlFreeVal.Contains(')') && xmlFreeVal.IndexOf(')') < 5) {
 						subpar = xmlFreeVal.Substring(1, xmlFreeVal.IndexOf(')') - 1);
 
@@ -87,9 +89,11 @@ public class MetadataProcessor {
 			}
 
 			if (textData.Element("footnotes") != null && !textData.Element("footnotes").IsEmpty) {
-				Program.toProcess.AddRange(textData.Element("fussnoten").Element("Content").Elements("P").Select(x => x.Value)
+				foreach (var textBlock in textData.Element("fussnoten").Element("Content").Elements("P").Select(x => x.Value)
 					.Where(x => !String.IsNullOrWhiteSpace(x))
-					.Select(x => (new LawRef {paragraph = p.number, shorthand = toUse.shorthand}, x)));
+					.Select(x => (new LawRef {paragraph = p.number, shorthand = toUse.shorthand}, x))) {
+					Program.toProcess.Add(textBlock);
+				}
 			}
 
 //TODO footnotes
