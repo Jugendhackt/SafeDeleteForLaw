@@ -4,14 +4,7 @@ public class RequiredBy {
 	private String Shorthand;
 	private String Paragraph;
 	private String Subparagraph;
-	private String errorMsg;
 	
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
 	public String getShorthand() {
 		return Shorthand;
 	}
@@ -32,20 +25,19 @@ public class RequiredBy {
 	}
 	
 	public String toString() {
-		if(errorMsg == null) {
-			try {
-				Integer.parseInt(getParagraph());
-				
-				if(getSubparagraph() != null)
+		if(getParagraph() != null) {
+
+			if(Character.isDigit(getSubparagraph().charAt(0))) {
+				if(getSubparagraph() != null) {
 					return "(" + getShorthand() + ") § " + getParagraph() + " §§ " + getSubparagraph(); 
-				else
+				} else {
 					return "(" + getShorthand() + ") § " + getParagraph();
-				
-			} catch(Exception e) {
+				}
+			} else {
 				return "(" + getShorthand() + ") " + getParagraph();
 			}
 		} else {
-			return errorMsg;
+			return "Keine Einträge vorhanden!";
 		}
 	}
 }

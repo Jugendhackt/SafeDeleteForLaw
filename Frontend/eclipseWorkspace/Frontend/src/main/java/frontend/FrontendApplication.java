@@ -7,10 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FrontendApplication extends Application {
-
+	
 	@Override
 	public void start(Stage stage) throws Exception {
-		Parent parent = FXMLLoader.load(getClass().getResource("OldView.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("View.fxml"));
 		Scene scene = new Scene(parent);
 		
 		stage.setScene(scene);
