@@ -68,9 +68,9 @@ public class Controller {
     	private ListView<RequiredBy> referListView;
     	
     	private int listViewStatus = 0;
-    	private Root r;
     	private String subPTitle, paragraphsTitle;
-    	
+		private Root r;
+		
     	@FXML
         void backButtonAction(MouseEvent event) {
     		if(listViewStatus == 1) {
@@ -116,71 +116,78 @@ public class Controller {
 	    @FXML
 	    void deleteButtonAction(MouseEvent event) {
 	    	deleteButton.setDisable(true);
-	    	
-	    	ObjectMapper mapper = new ObjectMapper();
+	    	int statIndex = statuesListView.getSelectionModel().getSelectedIndex();
+	    	int paraIndex = paragraphsListView.getSelectionModel().getSelectedIndex();
+	    	int subIndex = subListView.getSelectionModel().getSelectedIndex();
+	    	int referIndex = referListView.getSelectionModel().getSelectedIndex();
 	    	
 	    	if(listViewStatus == 0) {
-	    		String shorthand = statuesListView.getSelectionModel().getSelectedItem().getShorthand();
-		    	int index = statuesListView.getSelectionModel().getSelectedIndex();
-	    		
 	    		if(statuesListView.getSelectionModel().getSelectedItem() != null) {
-	    			statuesListView.getItems().remove(index);
+	    			statuesListView.getItems().remove(statIndex);
 	    			
 	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
-	    			
 	    			for(int i = 0; i < r.getStatues().length; i++) {
-	    				if(!r.getStatues()[i].getShorthand().equals(shorthand)) {
-	    					if(i <= index) {
+	    					if(i <= statIndex) {
 	    						newStatues[i] = r.getStatues()[i];
 	    					} else {
 	    						newStatues[i-1] = r.getStatues()[i];
 	    					}
-	    				}
 	    			}
 	    			r.setStatues(newStatues);
 	    		}
-	    	} else if(listViewStatus == 1) {
-	    		String number = paragraphsListView.getSelectionModel().getSelectedItem().getNumber();
-		    	int index = paragraphsListView.getSelectionModel().getSelectedIndex();
-	    		
+	    	} else if(listViewStatus == 1) {	    		
 	    		if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
-	    			paragraphsListView.getItems().remove(index);
-	    		
-	    			for(int j = 0; j < r.getStatues().length; j++) {
-	    				if(r.getStatues()[j].getShorthand().equals(statuesListView.getSelectionModel().getSelectedItem().getShorthand())) {
-	    					
-	    					Paragraphs[] newParagraphs = new Paragraphs[r.getStatues()[j].getParagraphs().length-1];
-	    					for(int i = 0; i < r.getStatues()[j].getParagraphs().length; i++) {
-	    	    				if(!r.getStatues()[j].getParagraphs()[i].getNumber().equals(number)) {
-	    	    					
-	    	    					if(i <= index) {
-	    	    						newParagraphs[i] = r.getStatues()[j].getParagraphs()[i];
-	    	    					} else {
-	    	    						newParagraphs[i-1] = r.getStatues()[j].getParagraphs()[i];
-	    	    					}
-	    	    				}
-	    	    			}
-	    	    			r.getStatues()[j].setParagraphs(newParagraphs);
-	    				}
+	    			paragraphsListView.getItems().remove(paraIndex);
+	    		    
+	    			Paragraphs[] newParagraphs = new Paragraphs[r.getStatues()[statIndex].getParagraphs().length-1];
+					for(int i = 0; i < r.getStatues()[statIndex].getParagraphs().length; i++) {
+						if(i <= paraIndex) {
+    						newParagraphs[i] = r.getStatues()[statIndex].getParagraphs()[i];
+    					} else {
+    						newParagraphs[i-1] = r.getStatues()[statIndex].getParagraphs()[i];
+    					}
 	    			}
 	    			
-	    			
+	    			r.getStatues()[statIndex].setParagraphs(newParagraphs);
 	    		}
-    		} else if(listViewStatus == 2) {
-
-    			int statIndex = statuesListView.getSelectionModel().getSelectedIndex();
-    			int paraIndex = paragraphsListView.getSelectionModel().getSelectedIndex();
-    			int subIndex = subListView.getSelectionModel().getSelectedIndex();
-    			
+    		} else if(listViewStatus == 2) {    			
 	    		if(subListView.getSelectionModel().getSelectedItem() != null) {
 	    			subListView.getItems().remove(subIndex);
 	    			
-//	    			Statues[] newStatues = new Statues[r.getStatues().length-1];
-//	    			for(int i = 0; i < )
-//	    			r.setStatues(newStatues);
+	    			Subparagraphs[] newSubs = new Subparagraphs[r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs().length - 1];
+	    			for(int i = 0; i < newSubs.length; i++) {
+	    				if(i <= subIndex) {
+    						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex];
+    					} else {
+    						newSubs[i-1] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex];
+    					}
+		    		}
+	    			r.getStatues()[statIndex].getParagraphs()[paraIndex].setSubparagraphs(newSubs);
+	    			
 	    		}
-    		}
-	    }
+	    	} else if(listViewStatus == 3) {    			
+	    		if(referListView.getSelectionModel().getSelectedItem() != null) {
+	    			referListView.getItems().remove(subIndex);
+	    			
+	    			RequiredBy[] newRefers = new RequiredBy[r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby().length - 1];
+	    			for(int i = 0; i < newRefers.length; i++) {
+	    				if(i <= subIndex) {
+	    					newRefers[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby()[referIndex];
+    					} else {
+    						newRefers[i-1] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby()[referIndex];
+    					}
+		    		}
+	    			r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].setRequiredby(newRefers);	    			
+	    		}
+	    	}
+	    	
+	    	ObjectMapper mapper = new ObjectMapper();
+			try {
+				mapper.writeValue(new File("root.json"), r);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
 	    
 	    @FXML
 	    void statuesListViewAction(MouseEvent event) {
@@ -199,13 +206,8 @@ public class Controller {
 	        			paragraphsListView.setDisable(false);
 	    				
 	    				ObservableList<Paragraphs> paragraphItems = FXCollections.observableArrayList();
-                        paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
-                                                
-                        if(paragraphItems.isEmpty()) {
-	    					Paragraphs err = new Paragraphs();
-	    					err.setErrorMsg("Keine Einträge vorhanden!");
-	    					paragraphItems.add(err);
-	    				} 
+	    				
+	    				paragraphItems.addAll(statuesListView.getSelectionModel().getSelectedItem().getParagraphs());
                         
 	    				paragraphsListView.setItems(paragraphItems);
 	    				paragraphsListView.setVisible(true);
@@ -236,15 +238,8 @@ public class Controller {
 	    				
 	    				ObservableList<Subparagraphs> subItems = FXCollections.observableArrayList();
 	    				
-	    				if(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs() != null)
-	    					subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
-	    				
-	    				if(subItems.isEmpty()) {
-	    					Subparagraphs err = new Subparagraphs();
-	    					err.setErrorMsg("Keine Einträge vorhanden!");
-	    					subItems.add(err);
-	    				}
-	    				
+	    				subItems.addAll(paragraphsListView.getSelectionModel().getSelectedItem().getSubparagraphs());
+    				
 	    				
 	    				subListView.setItems(subItems);
 	    				subListView.setVisible(true);
@@ -259,7 +254,7 @@ public class Controller {
 	    
 	    @FXML
 	    void subListViewAction(MouseEvent event) {
-	    	if(paragraphsListView.getSelectionModel().getSelectedItem() != null) {
+	    	if(subListView.getSelectionModel().getSelectedItem() != null) {
 	    		deleteButton.setDisable(false);
 	    		if(event.getButton().equals(MouseButton.PRIMARY)) {
 	    			if(event.getClickCount() == 2) {
@@ -267,20 +262,20 @@ public class Controller {
 	    				listViewStatus = 3;
 	    				backButton.setDisable(false);
 	    				
-	    				titleLabel.setText("Verweise");
+	    				titleLabel.setText(subListView.getSelectionModel().getSelectedItem().toString() + " - Verweise");
 	    				
 	    				referListView.toFront();
 	    				referListView.setDisable(false);
 	    				
 	    				ObservableList<RequiredBy> referItems = FXCollections.observableArrayList();
-	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getrequiredby());	    				
+	    				
+	    				referItems.addAll(subListView.getSelectionModel().getSelectedItem().getRequiredby());
 	    				
 	    				if(referItems.isEmpty()) {
-	    					RequiredBy err = new RequiredBy();
-	    					err.setErrorMsg("Keine Einträge vorhanden!");
-	    					referItems.add(err);
+	    					RequiredBy error = new RequiredBy();
+	    					referItems.add(error);
 	    				}
-	    					
+	    				
 	    				referListView.setItems(referItems);
 	    				referListView.setVisible(true);
 	    					

@@ -4,14 +4,7 @@ public class Paragraphs {
 	private String Number;
 	private boolean HasSubparagraphs;
 	private Subparagraphs[] Subparagraphs;
-	private String errorMsg;
 	
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
 	public String getNumber() {
 		return Number;
 	}
@@ -20,7 +13,7 @@ public class Paragraphs {
 		this.Number = Number;
 	}
 	
-	public boolean isHasSubparagraphs() {
+	public boolean hasSubparagraphs() {
 		return HasSubparagraphs;
 	}
 	
@@ -39,7 +32,7 @@ public class Paragraphs {
 	}
 	
 	public String toString() {
-		if(errorMsg == null && getNumber() != null) {
+		if(getNumber() != null) {
 			
 			if(Character.isDigit(getNumber().charAt(0))) {
 				return "§ " + getNumber();
@@ -47,10 +40,8 @@ public class Paragraphs {
 				return getNumber();
 			}
 			
-		} else if(getNumber() == null) {
-			return "Keine Einträge vorhanden!";
 		} else {
-			return errorMsg;
+			return "Keine Einträge vorhanden!";
 		}
 	}
 }

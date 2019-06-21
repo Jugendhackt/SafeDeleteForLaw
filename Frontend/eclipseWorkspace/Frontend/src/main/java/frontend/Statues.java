@@ -4,14 +4,7 @@ public class Statues {
 	private String Shorthand;
 	private String Fullname;
 	private Paragraphs[] Paragraphs;
-	private String errorMsg;
 	
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
 	public String getShorthand() {
 		return Shorthand;
 	}
@@ -32,9 +25,9 @@ public class Statues {
 	}
 	
 	public String toString() {
-		if(errorMsg == null)
+		if(getFullname() != null)
 			return getFullname() + " (" + getShorthand() + ")";
 		else
-			return errorMsg;
+			return "Keine Einträge vorhanden!";
 	}
 }
