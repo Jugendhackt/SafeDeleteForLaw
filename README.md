@@ -1,3 +1,4 @@
+[![Build status](https://dev.azure.com/TheMinefighter/SafeDeleteForLaw/_apis/build/status/SafeDeleteForLaw-.NET%20Desktop-CI)](https://dev.azure.com/TheMinefighter/SafeDeleteForLaw/_build/latest?definitionId=7)
 # SafeDeleteForLaw
 This projects aim is it to provide a way to check if one law is referenced somewhere else before it get's deleted.
 It uses german law info from the government site ([gesetze-im-internet.de](gesetze-im-internet.de)).
