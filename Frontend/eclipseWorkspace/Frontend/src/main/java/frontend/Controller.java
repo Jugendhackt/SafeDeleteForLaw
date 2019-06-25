@@ -2,6 +2,7 @@ package frontend;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -156,28 +157,22 @@ public class Controller {
 	    			
 	    			Subparagraphs[] newSubs = new Subparagraphs[r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs().length - 1];
 	    			for(int i = 0; i < newSubs.length; i++) {
-	    				if(i <= subIndex) {
-    						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex];
+	    				if(i < subIndex) {
+	    					 
+	    					newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i];
+	    					System.out.println("1: " + newSubs[i].getNumber());
+    					} else if(i+1 != subIndex) {
+    						
+    						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i+1];
+    						System.out.println("2: " + newSubs[i].getNumber());
     					} else {
-    						newSubs[i-1] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex];
+    						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i];
+    						System.out.println("3: " + newSubs[i].getNumber());
     					}
+	    				System.out.println(Arrays.toString(newSubs));
 		    		}
 	    			r.getStatues()[statIndex].getParagraphs()[paraIndex].setSubparagraphs(newSubs);
 	    			
-	    		}
-	    	} else if(listViewStatus == 3) {    			
-	    		if(referListView.getSelectionModel().getSelectedItem() != null) {
-	    			referListView.getItems().remove(subIndex);
-	    			
-	    			RequiredBy[] newRefers = new RequiredBy[r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby().length - 1];
-	    			for(int i = 0; i < newRefers.length; i++) {
-	    				if(i <= subIndex) {
-	    					newRefers[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby()[referIndex];
-    					} else {
-    						newRefers[i-1] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].getRequiredby()[referIndex];
-    					}
-		    		}
-	    			r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[subIndex].setRequiredby(newRefers);	    			
 	    		}
 	    	}
 	    	
