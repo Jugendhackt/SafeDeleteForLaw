@@ -2,7 +2,7 @@ namespace DataStructures {
 public class LawRef {
 	public string shorthand;
 	public string paragraph;
-	public string? subparagraph;
+	public string subparagraph;
 	public override string ToString() => subparagraph is null?$"{paragraph} {shorthand}":$"{paragraph} ({subparagraph}) {shorthand}";
 
 	protected bool Equals(LawRef other) => string.Equals(shorthand, other.shorthand) && string.Equals(paragraph, other.paragraph) && string.Equals(subparagraph, other.subparagraph);

@@ -100,12 +100,14 @@ public class Download {
 				continue;
 			}
 
-			using Stream zipStream = unusedZipStream;
-			var z = new ZipArchive(zipStream);
-			foreach (ZipArchiveEntry zipArchiveEntry in z.Entries.Where(x => x.Name.EndsWith(".xml"))) {
-				using Stream zipContentStream = zipArchiveEntry.Open();
+			using (Stream zipStream = unusedZipStream) {
+				var z = new ZipArchive(zipStream);
+				foreach (ZipArchiveEntry zipArchiveEntry in z.Entries.Where(x => x.Name.EndsWith(".xml"))) {
+					using (Stream zipContentStream = zipArchiveEntry.Open())
 #if InMemoryXmlHandling
-				Processor.MetadataProcessor.LoadMetaData(XDocument.Load(zipContentStream));
+					{
+						Processor.MetadataProcessor.LoadMetaData(XDocument.Load(zipContentStream));
+					}
 #else
 				try {
 					using FileStream fileStream =
@@ -118,6 +120,7 @@ public class Download {
 					continue;
 				}
 #endif
+				}
 			}
 
 			/*	using Stream xmlStream=z.Entries.First().Open();
