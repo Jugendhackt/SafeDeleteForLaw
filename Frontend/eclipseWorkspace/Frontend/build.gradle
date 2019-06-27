@@ -7,17 +7,17 @@
  */
 //apply plugin: 'java'
 buildscript {
-    dependencies {
-        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
-    }
-
     repositories {
-        mavenLocal()
-        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.openjfx:javafx-plugin:0.0.+"
     }
 }
 apply plugin: 'java'
-
+apply plugin: 'org.openjfx.javafxplugin'
 repositories {
     mavenLocal()
     mavenCentral()
@@ -34,14 +34,15 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:26.0-jre'
     implementation 'com.fasterxml.jackson.core:jackson-databind:+'
-
+    //compile 'javafx:javafx.controls'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
-apply plugin: 'javafx-gradle-plugin'
-
-
-jfx {
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+//processResources << {}
+/*jfx {
     verbose=true
     // minimal requirement for jfxJar-task
     mainClass = 'frontend.FrontendApplication'
@@ -49,7 +50,7 @@ jfx {
     jfxMainAppJarName = "project-jfx.jar"
     // minimal requirement for jfxNative-task
     vendor = 'YourName'
-}
+}*/
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
     manifest {
