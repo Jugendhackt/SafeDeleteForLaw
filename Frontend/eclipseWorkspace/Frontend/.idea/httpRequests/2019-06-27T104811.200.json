@@ -1,0 +1,36 @@
+[
+  {
+    "url": "https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/assets/13438773",
+    "id": 13438773,
+    "node_id": "MDEyOlJlbGVhc2VBc3NldDEzNDM4Nzcz",
+    "name": "BasicRelease.zip",
+    "label": "",
+    "uploader": {
+      "login": "TheMinefighter",
+      "id": 32145868,
+      "node_id": "MDQ6VXNlcjMyMTQ1ODY4",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/32145868?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/TheMinefighter",
+      "html_url": "https://github.com/TheMinefighter",
+      "followers_url": "https://api.github.com/users/TheMinefighter/followers",
+      "following_url": "https://api.github.com/users/TheMinefighter/following{/other_user}",
+      "gists_url": "https://api.github.com/users/TheMinefighter/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/TheMinefighter/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/TheMinefighter/subscriptions",
+      "organizations_url": "https://api.github.com/users/TheMinefighter/orgs",
+      "repos_url": "https://api.github.com/users/TheMinefighter/repos",
+      "events_url": "https://api.github.com/users/TheMinefighter/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/TheMinefighter/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "content_type": "application/zip",
+    "state": "uploaded",
+    "size": 63942,
+    "download_count": 0,
+    "created_at": "2019-06-27T20:27:04Z",
+    "updated_at": "2019-06-27T20:27:04Z",
+    "browser_download_url": "https://github.com/Jugendhackt/SafeDeleteForLaw/releases/download/Concurrent/BasicRelease.zip"
+  }
+]

@@ -1,0 +1,262 @@
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?Name=Test.zip
+Accept: */*
+Cache-Control: no-cache
+Authorization: fc55865a8d5221556b4eca9f9b71e33bd0bbf333
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T105325.400.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?Name=Test.zip
+Accept: */*
+Cache-Control: no-cache
+Authorization: fc55865a8d5221556b4eca9f9b71e33bd0bbf333
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T105310.400.json
+
+###
+
+GET https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?Name=Test.zip
+Accept: */*
+Cache-Control: no-cache
+Authorization: fc55865a8d5221556b4eca9f9b71e33bd0bbf333
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T105301.400.json
+
+###
+
+GET https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?Name=Test.zip
+Accept: */*
+Cache-Control: no-cache
+Authorization: token fc55865a8d5221556b4eca9f9b71e33bd0bbf333
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T105225.400.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets
+Accept: */*
+Cache-Control: no-cache
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T104811.200.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T104753.404.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+< F:/TobiasAcc/Downloads/BasicRelease.zip
+
+<> 2019-06-27T104711.404.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104529.404.json
+
+###
+
+GET /https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004/assets{
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/18278004
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-27T104407.200.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-27T104347.200.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-27T104340.404.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104309.404.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104113.404.json
+
+###
+
+POST https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104108.404.json
+
+###
+
+POST https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/1?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104020.404.json
+
+###
+
+POST https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/Concurrent?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T104016.404.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/1/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T103946.404.json
+
+###
+
+POST https://uploads.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/Concurrent/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T103810.404.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/latest?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T103608.200.json
+
+###
+
+GET https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/1/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T103542.404.json
+
+###
+
+POST https://api.github.com/repos/Jugendhackt/SafeDeleteForLaw/releases/Concurrent/assets?name=BasicRelease.zip
+Accept: */*
+Cache-Control: no-cache
+
+--null
+
+
+< F:\TobiasAcc\Downloads\BasicRelease.zip
+--null--
+
+<> 2019-06-27T103450.404.json
+
+###
+
