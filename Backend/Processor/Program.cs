@@ -38,7 +38,7 @@ File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
 		Stats();
 	}
 
-	private static JsonRoot ActualReferences() {
+	public static JsonRoot ActualReferences() {
 #if SeperatedReferenceDetection
 		root = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
 			"MetaOnly.json")));
