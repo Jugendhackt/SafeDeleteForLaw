@@ -21,14 +21,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.2"
+          "net472"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.2": {
+          "net472": {
             "projectReferences": {}
           }
         },
@@ -39,13 +39,7 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.2": {
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
-        }
+        "net472": {}
       }
     },
     "C:\\Users\\Mitja\\Documents\\GitHub\\SafeDeleteForLaw\\Backend\\Downloader\\Downloader.csproj": {
@@ -65,14 +59,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.2"
+          "net472"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.2": {
+          "net472": {
             "projectReferences": {
               "C:\\Users\\Mitja\\Documents\\GitHub\\SafeDeleteForLaw\\Backend\\DataStructures\\DataStructures.csproj": {
                 "projectPath": "C:\\Users\\Mitja\\Documents\\GitHub\\SafeDeleteForLaw\\Backend\\DataStructures\\DataStructures.csproj"
@@ -90,12 +84,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.2": {
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
+        "net472": {
+          "dependencies": {
+            "System.IO.Compression": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
         }
       }
     },
@@ -116,14 +116,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.2"
+          "net472"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.2": {
+          "net472": {
             "projectReferences": {
               "C:\\Users\\Mitja\\Documents\\GitHub\\SafeDeleteForLaw\\Backend\\DataStructures\\DataStructures.csproj": {
                 "projectPath": "C:\\Users\\Mitja\\Documents\\GitHub\\SafeDeleteForLaw\\Backend\\DataStructures\\DataStructures.csproj"
@@ -138,12 +138,18 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.2": {
-          "imports": [
-            "net461"
-          ],
-          "assetTargetFallback": true,
-          "warn": true
+        "net472": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
         }
       }
     }
