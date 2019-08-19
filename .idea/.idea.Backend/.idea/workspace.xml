@@ -40,6 +40,11 @@
               <item name="" type="784c90a0:SolutionExplorerRootNode" />
               <item name="Backend" type="24d0babc:SolutionExplorerModelNode" />
             </path>
+            <path>
+              <item name="" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="Backend" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DataStructures" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -97,12 +102,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1566237355239</updated>
-      <workItem from="1566237360248" duration="273000" />
+      <workItem from="1566237360248" duration="444000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273000" />
+    <option name="totallyTimeSpent" value="444000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -132,7 +137,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.12512717" />
       <window_info anchor="bottom" id="Unit Tests" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32984293" />
       <window_info anchor="bottom" id="NuGet" order="11" />
       <window_info anchor="right" id="Unit Tests Coverage" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
