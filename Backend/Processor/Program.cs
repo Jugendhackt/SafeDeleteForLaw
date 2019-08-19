@@ -32,6 +32,13 @@ public static class Program {
 		Console.WriteLine("In Memory Xml Handling is enabled this executable has nothing to do, exiting with 1");
 		Environment.Exit(1);
 #endif
+ActualReferences();
+
+File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
+		Stats();
+	}
+
+	private static JsonRoot ActualReferences() {
 #if SeperatedReferenceDetection
 		root = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
 			"MetaOnly.json")));
@@ -46,13 +53,10 @@ public static class Program {
 #endif
 #if MultiThreadingEnabled
 		ReferenceProcessor.MCReferenceDetector();
-		#else
+#else
 		ReferenceProcessor.ReferenceDetector();
 #endif
-		
-
-		File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
-		Stats();
+		return root;
 	}
 
 	public static void Stats() {
