@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
-		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TargetFramework>net472</TargetFramework>
 		<OutputType>Exe</OutputType>
 		<LangVersion>7.2</LangVersion>
 	</PropertyGroup>
@@ -9,6 +9,14 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
 	  <ProjectReference Include="..\Processor\Processor.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Reference Include="System.Net.Http" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="System.IO.Compression" Version="4.3.0" />
 	</ItemGroup>
 
 </Project>

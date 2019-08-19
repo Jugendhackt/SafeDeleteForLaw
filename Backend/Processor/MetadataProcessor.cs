@@ -43,7 +43,7 @@ public class MetadataProcessor {
 			}
 
 			string enbez = norm.Element("metadaten").Element("enbez").Value;
-			if (enbez.Contains("(XXXX)") ||enbez.Contains("(weggefallen)",StringComparison.OrdinalIgnoreCase) || enbez.Contains("Inhalt") || enbez == "Übersicht") {
+			if (enbez.Contains("(XXXX)") ||enbez.Contains("(weggefallen)") || enbez.Contains("Inhalt") || enbez == "Übersicht") {
 				continue;
 			}
 
@@ -69,7 +69,7 @@ public class MetadataProcessor {
 			if (textData.Element("text") != null) {
 				foreach (XElement pars in textData.Element("text").Element("Content").Elements("P")) {
 					string xmlFreeVal = RmXml(pars.Value);
-					if (xmlFreeVal.StartsWith('(') && xmlFreeVal.Contains(')') && xmlFreeVal.IndexOf(')') < 5) {
+					if (xmlFreeVal.StartsWith("(") && xmlFreeVal.Contains(')') && xmlFreeVal.IndexOf(')') < 5) {
 						subpar = xmlFreeVal.Substring(1, xmlFreeVal.IndexOf(')') - 1);
 
 						p.hasSubparagraphs = true;

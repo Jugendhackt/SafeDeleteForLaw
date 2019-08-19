@@ -79,7 +79,7 @@ public class Download {
 	/// <returns>a task because this method is async</returns>
 	public static async Task AllLawsStartingWith(string href) {
 		Console.WriteLine(
-			$"Running downloader for {href} on Thread {Thread.CurrentThread.Name} {Thread.CurrentThread.IsBackground} on Proc {Thread.GetCurrentProcessorId()}");
+			$"Running downloader for {href} on Thread {Thread.CurrentThread.Name} {Thread.CurrentThread.IsBackground} on Proc ");
 		Thread.CurrentThread.Name = $"Worker for {href}";
 		string xhtml = await Client.GetStringAsync(new Uri(baseUrl, href));
 		xhtml = Downloader.xhtml.xhtmlReplace(xhtml).Replace(xhtmlIncompliant, "");
