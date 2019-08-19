@@ -144,8 +144,10 @@ public class Controller {
 					for(int i = 0; i < r.getStatues()[statIndex].getParagraphs().length; i++) {
 						if(i <= paraIndex) {
     						newParagraphs[i] = r.getStatues()[statIndex].getParagraphs()[i];
+    						System.out.println(newParagraphs[i].getNumber());
     					} else {
     						newParagraphs[i-1] = r.getStatues()[statIndex].getParagraphs()[i];
+    						System.out.println(newParagraphs[i-1].getNumber());
     					}
 	    			}
 	    			
@@ -158,16 +160,11 @@ public class Controller {
 	    			Subparagraphs[] newSubs = new Subparagraphs[r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs().length - 1];
 	    			for(int i = 0; i < newSubs.length; i++) {
 	    				if(i < subIndex) {
-	    					 
 	    					newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i];
-	    					System.out.println("1: " + newSubs[i].getNumber());
     					} else if(i+1 != subIndex) {
-    						
     						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i+1];
-    						System.out.println("2: " + newSubs[i].getNumber());
     					} else {
     						newSubs[i] = r.getStatues()[statIndex].getParagraphs()[paraIndex].getSubparagraphs()[i];
-    						System.out.println("3: " + newSubs[i].getNumber());
     					}
 	    				System.out.println(Arrays.toString(newSubs));
 		    		}
