@@ -27,7 +27,7 @@
                     <ListView.ItemsSource>
                         <MultiBinding Converter="{StaticResource SearchConverter}" Mode="OneWay">
                             <Binding Path="statues" Mode="OneWay"></Binding>
-<Binding ElementName="SearchBox" Path="Text" Mode="OneWay"></Binding>
+                            <Binding ElementName="SearchBox" Path="Text" Mode="OneWay"></Binding>
                         </MultiBinding>
                     </ListView.ItemsSource>
                     <ListView.View>
@@ -40,9 +40,9 @@
 
             <TabItem Header="Paragraphen">
                 <ListView x:Name="paragraphView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
-                    <!--<ListView.ItemsSource>
-                        <Binding Path="statues" Mode="OneWay"></Binding>
-                    </ListView.ItemsSource>-->
+                    <ListView.ItemsSource>
+                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay"></Binding>
+                    </ListView.ItemsSource>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>
