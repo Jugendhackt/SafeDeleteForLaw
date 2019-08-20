@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:NewFrontend"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources><local:SearchConverter x:Key="SearchConverter"></local:SearchConverter></Window.Resources>
     <Window.DataContext>
         <local:ViewModel />
     </Window.DataContext>
@@ -24,7 +25,10 @@
             <TabItem Header="Gesetzbücher">
                 <ListView x:Name="statueView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemsSource>
-                        <Binding Path="statues" Mode="OneWay"></Binding>
+                        <MultiBinding Converter="{StaticResource SearchConverter}" Mode="OneWay">
+                            <Binding Path="statues" Mode="OneWay"></Binding>
+<Binding ElementName="SearchBox" Path="Text" Mode="OneWay"></Binding>
+                        </MultiBinding>
                     </ListView.ItemsSource>
                     <ListView.View>
                         <GridView>
