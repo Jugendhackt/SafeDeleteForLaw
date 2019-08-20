@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +100,10 @@
     <ProjectReference Include="..\..\Backend\DataStructures\DataStructures.csproj">
       <Project>{25774e92-d1e2-4a10-9ba4-cc57366f20d0}</Project>
       <Name>DataStructures</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Backend\Processor\Processor.csproj">
+      <Project>{ba02d668-300b-4d45-ac0e-c8a099b1b662}</Project>
+      <Name>Processor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataStructures;
+using Processor;
 
 namespace NewFrontend
 {
@@ -24,6 +25,8 @@ namespace NewFrontend
         public MainWindow()
         {
             InitializeComponent();
+           
+
         }
 
         private void SearchBtn_Click(object sender, RoutedEventArgs e)
