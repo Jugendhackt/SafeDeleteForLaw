@@ -1,8 +1,0 @@
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\bin\Debug\net472\DataStructures.dll
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\bin\Debug\net472\DataStructures.pdb
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.csprojAssemblyReference.cache
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.csproj.CoreCompileInputs.cache
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.AssemblyInfoInputs.cache
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.AssemblyInfo.cs
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.dll
-C:\Users\Mitja\Documents\GitHub\SafeDeleteForLaw\Backend\DataStructures\obj\Debug\net472\DataStructures.pdb
