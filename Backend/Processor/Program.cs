@@ -1,4 +1,4 @@
-﻿#undef SeperatedReferenceDetection
+﻿#define SeperatedReferenceDetection
 #define AdvancedMode
 #if AdvancedMode
 #define InMemoryXmlHandling
