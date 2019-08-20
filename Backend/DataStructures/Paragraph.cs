@@ -9,5 +9,7 @@ public class Paragraph {
 	public Paragraph() {
 		subparagraphs= new List<Subparagraph>();
 	}
-	}
+
+	public override string ToString() => number;
+}
 }
