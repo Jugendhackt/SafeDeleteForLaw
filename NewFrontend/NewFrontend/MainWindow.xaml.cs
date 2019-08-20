@@ -33,14 +33,14 @@ namespace NewFrontend
 
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            
+         /*   
             List<Paragraph> paragraphs = ((Statue) (statueView.SelectedItem)).paragraphs;
            // paragraphView.ItemsSource = paragraphs;
             if (!paragraphs.Any()) {
                 Debug.WriteLine("Empty Statue");
                 return;
             }
-            Debug.WriteLine(paragraphs.First());
+            Debug.WriteLine(paragraphs.First());*/
         }
     }
 }

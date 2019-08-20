@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewFrontend"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="SafeDeleteForLaw" Height="450" Width="800">
     <Window.Resources>
@@ -57,45 +58,38 @@
 
         <TabControl Grid.ColumnSpan="2">
             <TabItem Header="Gesetzbücher">
-                <ListView x:Name="statueView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
-                    <ListView.ItemsSource>
+                <ListBox x:Name="statueView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                    <ListBox.ItemsSource>
                         <MultiBinding Converter="{StaticResource SearchConverter}" Mode="OneWay">
                             <Binding Path="statues" Mode="OneWay"></Binding>
                             <Binding ElementName="SearchBox" Path="Text" Mode="OneWay"></Binding>
                         </MultiBinding>
-                    </ListView.ItemsSource>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                    </ListBox.ItemsSource>
+
+                </ListBox>
             </TabItem>
 
             <TabItem Header="Paragraphen">
-                <ListView x:Name="paragraphView" Grid.ColumnSpan="2" >
-                    <ListView.ItemsSource>
-                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                    </ListView.ItemsSource>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                <ListBox x:Name="paragraphView" Grid.ColumnSpan="2" >
+                    <ListBox.ItemsSource>
+                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.FallbackValue><x:Array Type="system:String">
+                                <system:String>
+                                    Kein Wert
+                                </system:String>
+                            </x:Array></Binding.FallbackValue>
+                        </Binding>
+                    </ListBox.ItemsSource>
+                </ListBox>
             </TabItem>
 
             <TabItem Header="Subparagraphen">
-                <ListView x:Name="subparagraphView" Grid.ColumnSpan="2">
-                    <ListView.ItemsSource>
+                <ListBox x:Name="subparagraphView" Grid.ColumnSpan="2">
+                    <ListBox.ItemsSource>
                         <Binding ElementName="paragraphView" Path="SelectedItem.subparagraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                    </ListView.ItemsSource>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                    </ListBox.ItemsSource>
+                    
+                </ListBox>
             </TabItem>
         </TabControl>
 
