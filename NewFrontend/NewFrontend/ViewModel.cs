@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Downloader;
-using  Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace NewFrontend
 {
