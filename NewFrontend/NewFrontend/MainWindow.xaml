@@ -19,18 +19,49 @@
             <RowDefinition Height="12*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="statueView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
-            <ListView.ItemsSource>
-                <Binding Path="statues" Mode="OneWay"></Binding>
-            </ListView.ItemsSource>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <TextBox x:Name="SearchBox" Margin="5" Grid.Row="1" TextWrapping="Wrap"/>
-        <Button x:Name="SearchBtn" Content="Suchen" Grid.Column="1" Margin="5" Grid.Row="1" Click="SearchBtn_Click"/>
+
+        <TabControl Grid.ColumnSpan="2">
+            <TabItem Header="Gesetzbücher">
+                <ListView x:Name="statueView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                    <ListView.ItemsSource>
+                        <Binding Path="statues" Mode="OneWay"></Binding>
+                    </ListView.ItemsSource>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="Paragraphen">
+                <ListView x:Name="paragraphView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                    <!--<ListView.ItemsSource>
+                        <Binding Path="statues" Mode="OneWay"></Binding>
+                    </ListView.ItemsSource>-->
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="Subparagraphen">
+                <ListView x:Name="subparagraphView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                    <!--<ListView.ItemsSource>
+                        <Binding Path="statues" Mode="OneWay"></Binding>
+                    </ListView.ItemsSource>-->
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+
+        <TextBox x:Name="SearchBox" Margin="5,5,5,5" Grid.Row="1" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
