@@ -4,7 +4,7 @@ namespace DataStructures {
 public class Paragraph {
 	public string number;
 	public bool hasSubparagraphs;
-	public List<Subparagraph> subparagraphs;
+	public List<Subparagraph> subparagraphs { get; set; }
 
 	public Paragraph() {
 		subparagraphs= new List<Subparagraph>();

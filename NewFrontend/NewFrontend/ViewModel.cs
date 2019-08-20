@@ -13,8 +13,6 @@ namespace NewFrontend
     public class ViewModel
     {
         public List<Statue> statues { get; set; }
-        public List<Paragraph> paragraphs { get; set; }
-        public List<Subparagraph> subparagraphs { get; set; }
 
         public ViewModel() {
             JsonRoot r = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath, "MetaOnly.json")));

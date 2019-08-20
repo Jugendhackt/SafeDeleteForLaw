@@ -53,9 +53,9 @@
 
             <TabItem Header="Subparagraphen">
                 <ListView x:Name="subparagraphView" Grid.ColumnSpan="2">
-                    <!--<ListView.ItemsSource>
-                        <Binding Path="statues" Mode="OneWay"></Binding>
-                    </ListView.ItemsSource>-->
+                    <ListView.ItemsSource>
+                        <Binding ElementName="paragraphView" Path="SelectedItem.subparagraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                    </ListView.ItemsSource>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>

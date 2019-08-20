@@ -14,5 +14,7 @@ public class Subparagraph {
 	public Subparagraph() {
 		requiredby= new List<LawRef>();
 	}
+
+    public override string ToString()=>$"§§ {number}";
 }
 }
