@@ -10,5 +10,7 @@ public class Statue {
 	public Statue() {
 		paragraphs= new List<Paragraph>();
 	}
+
+	public override string ToString() => fullname;
 }
 }
