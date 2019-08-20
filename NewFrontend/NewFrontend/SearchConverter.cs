@@ -17,7 +17,7 @@ public class SearchConverter : IMultiValueConverter {
 			if (!matches.Any()) {
 				return new[] {"Keine Einträge"};
 			}
-			return matches.OrderByDescending(x=>GetRanking(x,s));
+			return matches.OrderByDescending(x=> GetRanking(x,s));
 
 		}
 		else {

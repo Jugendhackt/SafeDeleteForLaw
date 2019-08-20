@@ -72,13 +72,16 @@
             <TabItem Header="Paragraphen">
                 <ListBox x:Name="paragraphView" Grid.ColumnSpan="2" >
                     <ListBox.ItemsSource>
-                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.FallbackValue><x:Array Type="system:String">
+                        <MultiBinding Converter="{StaticResource SearchConverter}" Mode="OneWay">
+                            <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"/>
+                            <Binding ElementName="SearchBox" Path="Text" Mode="OneWay"></Binding>
+                            
+                            <MultiBinding.FallbackValue><x:Array Type="system:String">
                                 <system:String>
                                     Kein Wert
                                 </system:String>
-                            </x:Array></Binding.FallbackValue>
-                        </Binding>
+                            </x:Array></MultiBinding.FallbackValue>
+                        </MultiBinding>
                     </ListBox.ItemsSource>
                 </ListBox>
             </TabItem>
