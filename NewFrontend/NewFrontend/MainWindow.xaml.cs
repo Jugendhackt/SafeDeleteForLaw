@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Shapes;
 using DataStructures;
 using Downloader;
 using Processor;
+using Paragraph = DataStructures.Paragraph;
 
 namespace NewFrontend
 {
@@ -32,9 +34,15 @@ namespace NewFrontend
 
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            
+            List<Paragraph> paragraphs = ((Statue) (statueView.SelectedItem)).paragraphs;
+           // paragraphView.ItemsSource = paragraphs;
+            if (!paragraphs.Any()) {
+                Debug.WriteLine("Empty Statue");
+                return;
+            }
+            Debug.WriteLine(paragraphs.First());
         }
     }
 }

@@ -11,7 +11,7 @@ public class SearchConverter : IMultiValueConverter {
 	public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
 		IEnumerable objects = (IEnumerable) values[0];
 		String s = (string) values[1];
-		return objects.Cast<object>() .Where(x => x.ToString().Contains(s)).Select(x=>x.ToString());
+		return objects.Cast<object>() .Where(x => x.ToString().Contains(s));
 	}
 
 	public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();

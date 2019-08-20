@@ -39,9 +39,9 @@
             </TabItem>
 
             <TabItem Header="Paragraphen">
-                <ListView x:Name="paragraphView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                <ListView x:Name="paragraphView" Grid.ColumnSpan="2" >
                     <ListView.ItemsSource>
-                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay"></Binding>
+                        <Binding ElementName="statueView" Path="SelectedItem.paragraphs" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"></Binding>
                     </ListView.ItemsSource>
                     <ListView.View>
                         <GridView>
@@ -52,7 +52,7 @@
             </TabItem>
 
             <TabItem Header="Subparagraphen">
-                <ListView x:Name="subparagraphView" Grid.ColumnSpan="2" SelectionChanged="ListView_SelectionChanged">
+                <ListView x:Name="subparagraphView" Grid.ColumnSpan="2">
                     <!--<ListView.ItemsSource>
                         <Binding Path="statues" Mode="OneWay"></Binding>
                     </ListView.ItemsSource>-->

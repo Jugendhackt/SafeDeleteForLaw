@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataStructures {
 public class Statue {
-	public List<Paragraph> paragraphs;
+	public List<Paragraph> paragraphs { get; set; }
 	public string fullname,shorthand;
 	public DateTime builddate;
 
