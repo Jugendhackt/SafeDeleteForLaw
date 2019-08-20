@@ -13,5 +13,10 @@
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Reference Include="System.Data.Linq" />
+	  <Reference Include="System.Web.RegularExpressions" />
+	</ItemGroup>
 
 </Project>
