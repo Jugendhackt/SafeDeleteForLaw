@@ -33,7 +33,8 @@ namespace NewFrontend
 
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-         /*   
+            var statueViewSelectedItem = (Statue) (statueView.SelectedItem);
+            /*   
             List<Paragraph> paragraphs = ((Statue) (statueView.SelectedItem)).paragraphs;
            // paragraphView.ItemsSource = paragraphs;
             if (!paragraphs.Any()) {

@@ -33,6 +33,9 @@ public class Download {
 #if MultiThreadingEnabled
 		Task.WaitAll(hrefs.Select(x => Task.Run(() => AllLawsStartingWith(x))).ToArray());
 #if SeperatedReferenceDetection
+		#if true
+		Processor.Program.ActualReferences();
+		#endif
 		File.WriteAllText(Path.Combine(DataStructures.JsonRoot.LawPath, "MetaOnly.json"),
 			JsonConvert.SerializeObject(Processor.Program.root));
 		File.WriteAllText(Path.Combine(DataStructures.JsonRoot.LawPath, "TextOnly.json"),
