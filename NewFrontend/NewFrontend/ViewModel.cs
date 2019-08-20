@@ -19,6 +19,7 @@ namespace NewFrontend
         public ViewModel() {
             JsonRoot r = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath, "MetaOnly.json")));
             statues = r.statues;
+            
         }
     }
 }

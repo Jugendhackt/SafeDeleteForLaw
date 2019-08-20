@@ -32,11 +32,6 @@ namespace NewFrontend
 
         }
 
-        private void SearchBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
