@@ -1,8 +1,9 @@
-﻿#define AdvancedMode
+﻿#undef SeperatedReferenceDetection
+#define AdvancedMode
 #if AdvancedMode
 #define InMemoryXmlHandling
 #if DEBUG
-#define SeperatedReferenceDetection
+
 #else
 #define MultiThreadingEnabled
 #endif
@@ -39,23 +40,27 @@ File.WriteAllText("root.json", JsonConvert.SerializeObject(root));
 	}
 
 	public static JsonRoot ActualReferences() {
-#if SeperatedReferenceDetection
-		root = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
-			"MetaOnly.json")));
-		toProcess = new ConcurrentBag<(LawRef, string)>(
-			JsonConvert.DeserializeObject<(LawRef, string)[]>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
-				"TextOnly.json"))));
-#else
-		foreach (string file in Directory.GetFiles(JsonRoot.LawPath)) {
-      			XDocument currentFile = XDocument.Load(file);
-      			MetadataProcessor.LoadMetaData(currentFile);
-      		}
-#endif
-#if MultiThreadingEnabled
-		ReferenceProcessor.MCReferenceDetector();
-#else
 		ReferenceProcessor.ReferenceDetector();
+#if false
+		#if SeperatedReferenceDetection
+      		root = JsonConvert.DeserializeObject<JsonRoot>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
+      			"MetaOnly.json")));
+      		toProcess = new ConcurrentBag<(LawRef, string)>(
+      			JsonConvert.DeserializeObject<(LawRef, string)[]>(File.ReadAllText(Path.Combine(DataStructures.JsonRoot.LawPath,
+      				"TextOnly.json"))));
+      #else
+      		foreach (string file in Directory.GetFiles(JsonRoot.LawPath)) {
+            			XDocument currentFile = XDocument.Load(file);
+            			MetadataProcessor.LoadMetaData(currentFile);
+            		}
+      #endif
+      #if MultiThreadingEnabled
+      		ReferenceProcessor.MCReferenceDetector();
+      #else
+      		ReferenceProcessor.ReferenceDetector();
+      #endif
 #endif
+
 		return root;
 	}
 
