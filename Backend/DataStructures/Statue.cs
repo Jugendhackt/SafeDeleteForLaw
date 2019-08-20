@@ -11,6 +11,6 @@ public class Statue {
 		paragraphs= new List<Paragraph>();
 	}
 
-	public override string ToString() => fullname;
+	public override string ToString() => shorthand + ": "+fullname;
 }
 }
