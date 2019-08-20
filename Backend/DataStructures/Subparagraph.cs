@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace DataStructures {
 public class Subparagraph {
 	public string number;
-	public List<LawRef> requiredby;
+	public List<LawRef> requiredby { get; set; }
 
 	public void AddRequired(LawRef toAdd) {
 		if (requiredby.Contains(toAdd)) {

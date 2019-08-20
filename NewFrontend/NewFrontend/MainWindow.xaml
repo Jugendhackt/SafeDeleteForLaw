@@ -91,6 +91,15 @@
                     
                 </ListBox>
             </TabItem>
+
+            <TabItem Header="Referenzen">
+                <ListBox x:Name="refView" Grid.ColumnSpan="2">
+                    <ListBox.ItemsSource>
+                        <Binding ElementName="subparagraphView" Path="SelectedItem.requiredby" Mode="OneWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                    </ListBox.ItemsSource>
+
+                </ListBox>
+            </TabItem>
         </TabControl>
 
         <TextBox x:Name="SearchBox" Margin="5,5,5,5" Grid.Row="1" TextWrapping="Wrap" Grid.ColumnSpan="2" Style="{StaticResource placeHolder}" Tag="Suche.."/>
