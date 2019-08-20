@@ -10,6 +10,6 @@ public class Paragraph {
 		subparagraphs= new List<Subparagraph>();
 	}
 
-	public override string ToString() => number;
+	public override string ToString() => $"§ {number}";
 }
 }

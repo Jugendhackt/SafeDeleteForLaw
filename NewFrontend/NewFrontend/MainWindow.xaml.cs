@@ -28,11 +28,9 @@ namespace NewFrontend
     {
         public MainWindow()
         {
-
             InitializeComponent();
-           
-
         }
+
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             
