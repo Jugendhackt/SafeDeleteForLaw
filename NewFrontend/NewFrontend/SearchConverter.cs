@@ -13,7 +13,9 @@ public class SearchConverter : IMultiValueConverter {
 
 
 			String s = (string) values[1];
-			IEnumerable<object> matches = objects.Cast<object>().Where(x => x.ToString().IndexOf(s,StringComparison.OrdinalIgnoreCase)!=-1);
+			Boolean hide = (bool) values[2];
+			IEnumerable<object> matches = objects.Cast<object>().Where(x => x.ToString().IndexOf(s,StringComparison.OrdinalIgnoreCase)!= -1 &&
+				(!hide||!(x is Statue stat && !stat.paragraphs.Any()) ));
 			if (!matches.Any()) {
 				return new[] {"Keine Einträge"};
 			}

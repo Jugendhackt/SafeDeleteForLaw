@@ -33,7 +33,7 @@ namespace NewFrontend
 
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var statueViewSelectedItem = (Statue) (statueView.SelectedItem);
+            var statueViewSelectedItem = (Statue) (StatueView.SelectedItem);
             /*   
             List<Paragraph> paragraphs = ((Statue) (statueView.SelectedItem)).paragraphs;
            // paragraphView.ItemsSource = paragraphs;
@@ -42,6 +42,28 @@ namespace NewFrontend
                 return;
             }
             Debug.WriteLine(paragraphs.First());*/
+        }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            foreach (object item in e.AddedItems) {
+                switch (item) {
+                    case TabItem _:
+                        SearchBox.Text = string.Empty;
+                        return;
+                    case Statue _:
+                        TControl.SelectedIndex = 1;
+                        return;
+                    
+                    case Paragraph _:
+                        TControl.SelectedIndex = 2;
+                        return;
+                    
+                    case Subparagraph _:
+                        TControl.SelectedIndex = 3;
+                        return;
+                }
+            }
+
         }
     }
 }
