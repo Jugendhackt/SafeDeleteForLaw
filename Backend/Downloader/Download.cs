@@ -6,7 +6,6 @@
 #define SeperatedReferenceDetection
 #endif
 #endif
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +21,6 @@ using Newtonsoft.Json;
 namespace Downloader {
 public class Download {
 	private const string divName = "{http://www.w3.org/1999/xhtml}div";
-	private static string XmlZip = "/xml.zip";
 
 	public static readonly string xhtmlIncompliant =
 		"<li id=\"grDarst6\"><a href=\"http://www.justiz.de/onlinedienste/bundesundlandesrecht/index.php\" title=\"Die Startseite dieses Angebotes wird in einem neuen Fenster ge�ffnet\" target=\"_blank\" class=\"nav\">Landesrecht</a>";
@@ -56,7 +54,7 @@ public class Download {
 #endif
 	}
 
-	public static readonly Uri baseUrl = new Uri("https://www.gesetze-im-internet.de/");
+	public static readonly Uri BaseUrl = new Uri("https://www.gesetze-im-internet.de/");
 
 	public static HttpClient Client = new HttpClient();
 
@@ -66,13 +64,13 @@ public class Download {
 	/// <returns>a Task because its async</returns>
 	public static async Task<IEnumerable<string>> DownloadLawListUrls() {
 		Directory.CreateDirectory(JsonRoot.LawPath);
-		string akt = await Client.GetStringAsync(new Uri(baseUrl, "aktuell.html"));
-		akt = xhtml.xhtmlReplace(akt).Replace(xhtmlIncompliant, "");
+		string akt = await Client.GetStringAsync(new Uri(BaseUrl, "aktuell.html"));
+		akt = Xhtml.XhtmlReplace(akt).Replace(xhtmlIncompliant, "");
 		XDocument aktDocument = XDocument.Parse(akt);
-		XElement content = aktDocument.Root.Element("{http://www.w3.org/1999/xhtml}body").Elements()
-			.First(x => x.Name == divName && x.Attribute("id").Value == "level2").Element(divName);
-		return content.Element(divName).Element(divName).Elements().SelectMany(x => x.Elements())
-			.Where(x => x.Name == "{http://www.w3.org/1999/xhtml}a").Select(x => x.Attribute("href").Value);
+		return aktDocument.Root?.Element("{http://www.w3.org/1999/xhtml}body")?.Elements(divName)
+			?.FirstOrDefault(x => x.Attribute("id")?.Value == "level2")?.Element(divName)?.Element(divName)?.Element(divName)?.Elements()
+			?.SelectMany(x => x.Elements(divName)).Select(x => x.Attribute("href")?.Value).Where(x => x != null)
+			?? throw new Exception($"The data sent by {BaseUrl} is not in the form this program expects");
 	}
 
 	/// <summary>
@@ -84,14 +82,17 @@ public class Download {
 		Console.WriteLine(
 			$"Running downloader for {href} on Thread {Thread.CurrentThread.Name} {Thread.CurrentThread.IsBackground} on Proc ");
 		Thread.CurrentThread.Name = $"Worker for {href}";
-		string xhtml = await Client.GetStringAsync(new Uri(baseUrl, href));
-		xhtml = Downloader.xhtml.xhtmlReplace(xhtml).Replace(xhtmlIncompliant, "");
+		string xhtml = await Client.GetStringAsync(new Uri(BaseUrl, href));
+		xhtml = Downloader.Xhtml.XhtmlReplace(xhtml).Replace(xhtmlIncompliant, "");
 		XDocument aktDocument = XDocument.Parse(xhtml);
-		XElement container = aktDocument.Root.Element("{http://www.w3.org/1999/xhtml}body").Elements()
-			.First(x => x.Name == divName && x.Attribute("id").Value == "level2").Element(divName).Element(divName);
+		XElement container = aktDocument.Root?.Element("{http://www.w3.org/1999/xhtml}body")
+			?.Elements(divName)
+			?.FirstOrDefault(x => x.Attribute("id")?.Value == "level2")
+			?.Element(divName)
+			?.Element(divName)?? throw new Exception($"The data sent by {BaseUrl} is not in the form this program expects");
 		IEnumerable<string> Laws = container.Element(divName).Elements()
-			.Select(x => x.Element("{http://www.w3.org/1999/xhtml}a").Attribute("href").Value.Substring(2))
-			.Select(x => new Uri(baseUrl, x.Substring(0, x.Length - 11)) + XmlZip);
+			.Select(x => (x.Element("{http://www.w3.org/1999/xhtml}a")?.Attribute("href")?.Value ?? throw new Exception($"The data sent by {BaseUrl} is not in the form this program expects")).Substring(2))
+			.Select(GetXmlUri);
 		foreach (string law in Laws) {
 			Console.WriteLine($"Loading {law}");
 			Stream unusedZipStream;
@@ -132,5 +133,8 @@ public class Download {
 			//	z.Entries.First()
 		}
 	}
+
+	private static string GetXmlUri(string x) =>
+		$"{new Uri(BaseUrl, x.Substring(0, x.Length - 11) /*removes normal html ending*/)}/xml.zip";
 }
 }

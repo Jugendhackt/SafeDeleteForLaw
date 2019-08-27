@@ -1,8 +1,11 @@
 using System.Linq;
-
+//To be replaced with some 3rd party lib in the future
 namespace Downloader {
-public class xhtml {
-	public static (string, string)[] escapeSequences = {
+public class Xhtml {
+	/// <summary>
+	/// collection of escape codes that do not work for xml
+	/// </summary>
+	public static (string, string)[] EscapeSequences = {
 		("&", "&amp;"), (">", "&gt;"), ("¡", "&iexcl;"), ("¢", "&cent;"), ("£", "&pound;"), ("¤", "&curren;"), ("¥", "&yen;"),
 		("¦", "&brvbar;"), ("§", "&sect;"), ("¨", "&uml;"), ("©", "&copy;"), ("ª", "&ordf;"), ("«", "&laquo;"), ("¬", "&not;"),
 		("­", "&shy;"), ("®", "&reg;"), ("¯", "&macr;"), ("¡", "&iexcl;"), ("¢", "&cent;"), ("£", "&pound;"), ("¤", "&curren;"),
@@ -20,10 +23,12 @@ public class xhtml {
 		("ù", "&ugrave;"), ("ú", "&uacute;"), ("û", "&ucirc;"), ("ü", "&uuml;"), ("ý", "&yacute;"), ("þ", "&thorn;"),
 		("ÿ", "&yuml;"), ("€", "&euro;"), (" ", "&nbsp;")
 	};
-
-	public static string xhtmlReplace(string xhtml) {
-		return Downloader.xhtml.escapeSequences.Aggregate(xhtml,
-			(current, escapeSequence) => current.Replace(escapeSequence.Item2, escapeSequence.Item1));
-	}
+/// <summary>
+/// De-escapes characters
+/// </summary>
+/// <param name="xhtml">The string to de-escape</param>
+/// <returns>The fixed string</returns>
+	public static string XhtmlReplace(string xhtml) => EscapeSequences.Aggregate(xhtml,
+		(current, escapeSequence) => current.Replace(escapeSequence.Item2, escapeSequence.Item1));
 }
 }
