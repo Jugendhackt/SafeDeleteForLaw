@@ -4,8 +4,9 @@ This projects aim is it to provide a way to check if one law is referenced somew
 It uses german law info from the government site ([gesetze-im-internet.de](gesetze-im-internet.de)).
 
 It is divided in:
- - a frontend (javafx)
- - two backend2 (both c#, netcoreapp 2.2):
-   - One for crawling the laws in xml form (takes depending on your internet connection about one hour) 
-   - one to detect references (takes depending on your hardware around one minute).
+ - a frontend (javafx, obsolete)
+ - a new Frontend (WPF)
+ - two backends (both c#):
+   - One for crawling the laws in xml form
+   - one to detect references
  - one json file for data exchange ([spec](./ExchangeJsonSpec.md))
